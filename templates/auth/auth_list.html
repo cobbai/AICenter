@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% import "ui/list_page.html" as pg%}
+
+{% block title %}权限列表{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div id="auth_list">
+        <h3 style="color:red">auth_list</h3>
+            {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+            {% endwith %}
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>用户名称</th>
+                <th>自我简介</th>
+                <th>添加时间</th>
+                <th>最后操作时间</th>
+                <th>是否认证邮箱</th>
+                <th>权限</th>
+                <th>操作事项</th>
+            </tr>
+            {% for v in auth_page.items %}
+            <tr>
+                <td>{{ v.id }}</td>
+                <td>{{ v.name }}</td>
+                <td>{{ v.url }}</td>
+                <td>{{ v.addtime }}</td>
+                <td>{{ v.last_seen }}</td>
+                <td>{{ v.confirmed }}</td>
+                <td>{{ v.role.role_name }}</td>
+                <td>
+                    <a href="{{ url_for('auth.auth_edit', id=v.id, page=auth_page.page) }}">编辑权限</a>
+                    <a href="{{ url_for('auth.auth_del', id=v.id, page=auth_page.page) }}">删除权限</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {{ pg.page(auth_page, "auth.auth_list") }}
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

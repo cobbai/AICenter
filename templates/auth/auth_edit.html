@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}权限修改{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div id="auth">
+        <b>{{ page_num }}</b>
+        <form action="{{ url_for('auth.auth_edit', id=id, page=page) }}" method="post">
+
+        {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+        {% endwith %}
+
+        <p>{{ form.confirmed.label }}{{ form.confirmed }}</p>
+        {% for message in form.confirmed.errors %}
+                <small class="error">{{ message }}</small><br>
+        {% endfor %}
+
+        <p>{{ form.role.label }}{{ form.role }}</p>
+            {% for message in form.role.errors %}
+                <small class="error">{{ message }}</small><br>
+            {% endfor %}
+        <p>{{ form.submit }}{{ form.csrf_token }}</p>
+
+        </form>
+
+        <a href="{{ url_for('auth.auth_list', page=page) }}">返回权限列表</a>
+
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

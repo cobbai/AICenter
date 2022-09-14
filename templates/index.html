@@ -1,0 +1,92 @@
+{% extends "base.html"%}
+{% import "bootstrap/wtf.html" as wtf %}  {#flask-wtf包中导入#}
+{% import "ui/list_page.html" as pg%}
+
+{% block title %}会员登录{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .profile-thumbnail {
+            position: absolute;
+        }
+
+        ul.blogs {
+            list-style-type: none;{# 设置列表项标记的类型 #}
+            padding: 0px;
+            margin: 16px 0px 0px 0px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        ul.blogs li.blog {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        {# 鼠标以上去背景变色 #}
+        ul.blogs li.blog:hover {
+            background-color: #f0f0f0;
+        }
+
+        div.blog-date {float: right;}
+        div.blog-user {font-weight: bold;}
+
+        div.blog-content {
+            margin-left: 48px;
+            min-height: 48px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block main %}
+
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+          {% if msgs %}
+              <ul>
+                  {% for category, msg in msgs %}
+                      <li class="{{ category }}" >{{ msg }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+    {% endwith %}
+
+    <h1>
+        Hello,
+        {% if current_user.is_authenticated %}
+            {{ current_user.name }}
+        {% else %}
+            Stranger
+        {% endif %}!
+    </h1>
+    <button><a href="{{ url_for('user.user_center') }}">用户中心</a></button>
+
+    {#快速创建表单：游客无法看到#}
+    <div>
+        {% if not current_user.is_anonymous %}
+            {{ wtf.quick_form(form) }}
+        {% endif %}
+    </div>
+
+    <div style="margin-top: 16px">
+        <ul class="nav nav-tabs">
+            <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('article.show_all') }}">All</a></li>
+            {% if current_user.is_authenticated %}
+                <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('article.show_followed') }}">Followed</a></li>
+            {% endif %}
+        </ul>
+
+        {# Blog展示：jinja2的include可以将html片段移到单独文件，然后导入使用 #}
+        {% include 'ui/_blogs.html' %}
+        {{ pg.page(blog_page, "article.index") }}
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

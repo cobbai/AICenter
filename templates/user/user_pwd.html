@@ -1,0 +1,58 @@
+{% extends "base.html"%}
+
+{% block title %}修改密码{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div id="role">
+
+        <form action="{{ url_for('user.user_pwd') }}" method="post">
+
+        {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+        {% endwith %}
+
+        <p>{{ form.old_pwd.label }}{{ form.old_pwd }}</p>
+            {% for message in form.old_pwd.errors %}
+                    <small class="error">{{ message }}</small><br>
+            {% endfor %}
+        <p>{{ form.new_pwd.label }}{{ form.new_pwd }}</p>
+            {% for message in form.new_pwd.errors %}
+                <small class="error">{{ message }}</small><br>
+            {% endfor %}
+        <p>{{ form.submit }}{{ form.csrf_token }}</p>
+
+      </form>
+
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

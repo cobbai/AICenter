@@ -1,0 +1,48 @@
+<ul class="comments">
+    {% for i in pagination.items %}
+    <li class="comment">
+        <div class="comment-thumbnail">
+            <a href="{{ url_for('user.user_detail', uid=i.user.id) }}">
+                <img class="img-rounded profile-thumbnail" src=" {% if i.user.face %} {{ url_for('static', filename=i.user.face) }} {% else %} {{ url_for('static', filename='/upload/defaultAvator.jpg') }} {% endif %}" width="40px" height="40px" alt="头像加载失败">
+            </a>
+        </div>
+        <div class="comment-content">
+            <div class="comment-date">{{ moment(i.addtime).fromNow() }}</div>
+            <div class="comment-author">
+                <a href="{{ url_for('user.user_detail', uid=i.user.id) }}">
+                    {{ i.user.name }}
+                </a>
+            </div>
+            <div class="comment-body">
+                {% if i.disabled %}
+                    <p><i>该评论内容已被屏蔽</i></p>
+                {% endif %}
+
+                {% if moderate or not i.disabled %}
+                    {% if i.content_html %}
+                        {{ i.content_html | safe }}
+                    {% else %}
+                        {{ i.content }}
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            {% if moderate %}
+            <br>
+                {% if i.disabled %}
+                    <a class="btn btn-default btn-xs"
+                       href="{{ url_for('article.comment_edit',comment_id=i.id, page=page, status=1) }}">
+                        Enable
+                    </a>
+                {% else %}
+                    <a class="btn btn-danger btn-xs"
+                       href="{{ url_for('article.comment_edit',comment_id=i.id, page=page, status=0) }}">
+                        Disable
+                    </a>
+                {% endif %}
+            {% endif %}
+
+        </div>
+    </li>
+    {% endfor %}
+</ul>

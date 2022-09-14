@@ -1,0 +1,45 @@
+{# 宏：页码同一模板 #}
+
+{# data:paginate
+   url:路由地址
+   fragment:url片段#}
+{% macro page(data, url, fragment='') %}
+
+{% if data %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm no-margin">
+        <li>共{{ data.total }}条数据</li>
+
+        {# 首页 #}
+        <li><a href="{{ url_for(url, page=1, **kwargs) }}{{ fragment }}">首页</a></li>  {# page=1作为 get请求参数 传入url #}
+
+        {# 上一页 #}
+        {% if data.has_prev %}
+            <li><a href="{{ url_for(url, page=data.prev_num, **kwargs) }}{{ fragment }}">上一页</a></li>
+        {% else %}
+            <li class="disabled"><a href="#">上一页</a></li>
+        {% endif %}
+
+        {# 页码 #}
+        {% for v in data.iter_pages() %}
+            {% if v == data.page %}
+                <li class="active"><a href="#"> {{ v }} </a></li> {# 当前页激活 #}
+            {% else %}
+                <li><a href="{{ url_for(url, page=v, **kwargs) }}{{ fragment }}"> {{ v }} </a></li>
+            {% endif %}
+        {% endfor %}
+
+        {# 下一页 #}
+        {% if data.has_next %}
+        <li><a href="{{ url_for(url, page=data.next_num, **kwargs) }}{{ fragment }}">下一页</a></li>
+        {% else %}
+        <li class="disabled"><a href="#">下一页</a></li>
+        {% endif %}
+
+        {# 尾页 #}
+        <li><a href="{{ url_for(url, page=data.pages, **kwargs) }}{{ fragment }}">尾页</a></li>
+    </ul>
+    </nav>
+{% endif %}
+
+{% endmacro %}

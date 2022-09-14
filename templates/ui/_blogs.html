@@ -1,0 +1,27 @@
+<ul class="blogs">
+    {% for i in blogs %}
+        <li class="blog">
+            <div class="profile-thumbnail">
+                {# 如果存在头像,就显示出来,否则,就显示默认头像 #}
+                <a href="{{ url_for('user.user_detail', uid=i.user.id) }}">
+                    <img class="img-rounded profile-thumbnail" src=" {% if i.user.face %} {{ url_for('static', filename=i.user.face) }} {% else %} {{ url_for('static', filename='/upload/defaultAvator.jpg') }} {% endif %}" width="40px" height="40px" alt="头像加载失败">
+                </a>
+            </div>
+            <div class="blog-content">
+                <div class="blog-date">{{ moment(i.timestamp).fromNow() }}</div>
+                <div class="blog-user">
+                    <a href="{{ url_for('user.user_detail', uid=i.user.id) }}">
+                        {{ i.user.name }}
+                    </a>
+                </div>
+                <div class="blog-body">
+                    {%  if i.body_html %}
+                        {{ i.body_html | safe }}  {# safe 不转译HTML元素 #}
+                    {% else %}
+                        {{ i.body }}
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

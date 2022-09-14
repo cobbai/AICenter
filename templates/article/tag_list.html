@@ -1,0 +1,64 @@
+{% extends "base.html"%}
+{% import "ui/list_page.html" as pg%}
+
+{% block title %}<title>标签列表</title>{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block middle %}
+
+    <div id="auth_list">
+        <h3 style="color:red">role_list</h3>
+            {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+            {% endwith %}
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>名称</th>
+                <th>添加时间</th>
+                <th>操作事项</th>
+            </tr>
+            {% for v in auth_page.items %}
+            <tr>
+                <td>{{ v.id }}</td>
+                <td>{{ v.name }}</td>
+                <td>{{ v.addtime }}</td>
+                <td>
+                    <a href="{{ url_for('article.tag_edit', id=v.id, edit_flag='edit') }}">编辑</a>
+                    <a href="{{ url_for('article.tag_del', id=v.id) }}">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {{ pg.page(auth_page, "article.tag_list") }}
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

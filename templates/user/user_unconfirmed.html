@@ -1,0 +1,51 @@
+{% extends "base.html"%}
+
+{% block title %}注册链接确认{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+          {% if msgs %}
+              <ul>
+                  {% for category, msg in msgs %}
+                      <li class="{{ category }}" >{{ msg }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+    {% endwith %}
+
+    <h1>
+        Hello,
+        {% if current_user.is_authenticated %}
+            {{ current_user.name }}
+        {% else %}
+            Stranger
+        {% endif %}!
+    </h1>
+
+    <h2>请前往邮箱，确认注册链接</h2>
+    <h3><a href="{{ url_for('user.user_resend_confirmation') }}">点击获取注册链接</a></h3>
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

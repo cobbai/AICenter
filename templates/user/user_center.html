@@ -1,0 +1,171 @@
+{% extends "base.html"%}
+
+{% block title %}会员中心{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+
+        .profile-thumbnail {
+            position: absolute;
+        }
+
+        ul.blogs {
+            list-style-type: none;{# 设置列表项标记的类型 #}
+            padding: 0px;
+            margin: 16px 0px 0px 0px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        ul.blogs li.blog {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        {# 鼠标以上去背景变色 #}
+        ul.blogs li.blog:hover {
+            background-color: #f0f0f0;
+        }
+
+        div.blog-date {float: right;}
+        div.blog-user {font-weight: bold;}
+
+        div.blog-content {
+            margin-left: 48px;
+            min-height: 48px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div id="role">
+{#        enctype="multipart/form-data" 上传文件的表单需要添加。既有文本数据，又有二进制数据#}
+        <form action="{{ url_for('user.user_center') }}" method="post" enctype="multipart/form-data">
+
+            {% with msgs = get_flashed_messages(with_categories=True) %}
+                  {% if msgs %}
+                      <ul>
+                          {% for category, msg in msgs %}
+                              <li class="{{ category }}" >{{ msg }}</li>
+                          {% endfor %}
+                      </ul>
+                  {% endif %}
+            {% endwith %}
+
+            <p>
+                {{ form.name.label }}
+                {{ form.name(readonly=True) }}
+                <a href="">修改</a>
+                {% for message in form.name.errors %}
+                        <small class="error">{{ message }}</small><br>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.email.label }}
+                {{ form.email(readonly=True, style='width:50%; color: #0c84ff') }}
+{#                {{ user.email }}#}
+                <a href="{{ url_for('user.user_change_email_request') }}">修改</a>
+                {% for message in form.email.errors %}
+                    <small class="error">{{ message }}</small><br>
+                {% endfor %}
+            </p>
+
+{#            <p>#}
+{#                {{ form.phone.label }}#}
+{#                {{ form.phone(readonly=True, style='font-size:24px; color:red') }}#}
+{#                {{ user.phone }}#}
+{#                <a href="">修改</a>#}
+{#                {% for message in form.phone.errors %}#}
+{#                    <small class="error">{{ message }}</small><br>#}
+{#                {% endfor %}#}
+{#            </p>#}
+
+            <p>{{ form.face.label }}{{ form.face }}</p>
+
+            <p>
+                {# 如果存在头像,就显示出来,否则,就显示默认头像 #}
+                <img src=" {% if user.face %} {{ url_for('static', filename=user.face) }} {% else %} {{ url_for('static', filename='/upload/defaultAvator.jpg') }} {% endif %}" width="50px" height="50px" alt="头像加载失败">
+                {% for message in form.face.errors %}
+                    <small class="error">{{ message }}</small><br>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.info.label }}{{ form.info }}
+                {% for message in form.info.errors %}
+                    <small class="error">{{ message }}</small><br>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.location.label }}{{ form.location }}
+                {% for message in form.location.errors %}
+                    <small class="error">{{ message }}</small><br>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.real_name.label }}{{ form.real_name }}
+                {% for message in form.real_name.errors %}
+                    <small class="error">{{ message }}</small><br>
+                {% endfor %}
+            </p>
+
+            <p>
+                <a href="{{ url_for('user.user_pwd') }}">修改密码</a>
+            </p>
+
+            <p>
+                {{ form.submit(style='
+                    color: #000000;
+                    font-size: 16px;
+                    border: 1px solid #e5e5e5;
+                    padding: 10px 25px;
+                    display: inline-block;
+                    background-color: #d7d7d7;
+                    font-weight: 600;
+                    cursor: pointer;
+                ') }}
+                {{ form.csrf_token }}
+            </p>
+      </form>
+    <button><a href="{{ url_for('article.index') }}">首页</a></button>
+    <button><a href="{{ url_for('article.article_add') }}">添加文章</a></button>
+    {% if current_user.can(Permission.MODERATE) %}
+        <button><a href="{{ url_for('article.comment_list') }}">管理评论</a></button>
+    {% endif %}
+
+    {% if not current_user.confirmed %}
+        请前往邮箱，确认注册链接。<a href="{{ url_for('user.user_resend_confirmation') }}">点击获取注册链接</a>
+    {% endif %}
+
+    <p>注册时间 {{ moment(user.addtime).format('MMMM Do YYYY, h:mm:ss a') }}.</p>
+    <p>最近访问时间 {{ moment(user.last_seen).fromNow(refresh=True) }}</p>
+
+    </div>
+
+    {% if blogs %}
+        <b>您发布的Blog有：</b>
+        {% include 'ui/_blogs.html' %}
+    {% endif %}
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

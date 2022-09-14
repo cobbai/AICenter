@@ -1,0 +1,273 @@
+
+{#{% extends "bootstrap/base.html" %}#}         {#不用extends引入，因为用的是cdn#}
+<!doctype html>
+<html lang="zh-CN">
+  {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Cobb">
+    <meta name="generator" content="Hugo 0.88.1">
+      <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+
+    <title>
+        {% block title %}
+            AICenter
+        {% endblock %}
+    </title>
+
+{#    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/carousel/">#}
+
+    {% block links %}
+        <!-- Bootstrap core CSS -->
+        {#<link href="../static/temp/assets/dist/css/bootstrap.min.css" rel="stylesheet">#}
+        <link href="{{ url_for('static', filename='bootstrap-4.6.1-dist/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
+    {% endblock %}
+
+      {# style 放在后面，使css优先级比文件里的高 #}
+    {% block styles %}
+        <style>
+            .navbar-nav .dropdown-menu {
+                position: absolute;  {# 下拉栏位置独立 #}
+                right: 0;  {# 下拉框贴近屏幕右边 #}
+                left: auto;
+            }
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+              }
+
+            {# 将768像素以上的设备指定字体大小 #}
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                  font-size: 3.5rem;
+                }
+            }
+            @media (max-width: 768px) {
+                .sidebar {
+                    top:0;
+                }
+            }
+
+        </style>
+    {% endblock %}
+
+  {% endblock %}
+
+  <body>
+    {% block body %}
+{#    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">#}
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-nowrap p-0 shadow">
+
+      {# navbar-toggler 放在 navbar-brand后面的话，则会到最右边 #}
+{#      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">#}
+      <button class="navbar-toggler d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">AICenter</a>
+
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+
+      <ul class="navbar-nav px-3">
+        {% if current_user.is_authenticated %}
+            <li class="nav-item text-nowrap dropdown">
+              {# TODO: 用户头像名称 #}
+              <a class="nav-item nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false">菜单</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="{{ url_for('user.user_center') }}">用户中心</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item" href="{{ url_for('user.user_logout') }}">登出</a>
+                </div>
+            </li>
+        {% else %}
+              <a class="nav-item text-nowrap nav-link" href="{{ url_for('user.user_login') }}">登录</a>
+        {% endif %}
+      </ul>
+
+    </nav>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link menu-link active" href="{{ url_for('article.index') }}">
+                  <span data-feather="home"></span>
+                  Dashboard {# <span class="sr-only">(current)</span> #}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link menu-link" data-toggle="collapse" href="#nlp" aria-expanded="false" aria-controls="nlp">
+                  <span data-feather="file"></span>
+                  Orders
+                  <span class="menu-arrow" data-feather="chevron-right"></span>
+                </a>
+                <div class="collapse" id="nlp">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            {# TODO: 路由名结尾要包含 collapse 的 id #}
+                            <a class="nav-link sub-menu-link" href="{{ url_for('nlp.dynamicform') }}">
+                                <span data-feather="chevron-down"></span>
+                                nlp
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sub-menu-link" href="{{ url_for('nlp.dynamicform') }}">
+                                <span data-feather="chevron-down"></span>
+                                nlp
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link menu-link" href="{{ url_for('article.article_list') }}">
+                  <span data-feather="shopping-cart"></span>
+                  Products
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link menu-link" href="#">
+                  <span data-feather="users"></span>
+                  Customers
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link menu-link" href="{{ url_for('temp.chart') }}">
+                  <span data-feather="bar-chart-2"></span>
+                  Reports
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link menu-link" data-toggle="collapse" href="#Integrations" aria-expanded="false" aria-controls="Integrations">
+                  <span data-feather="file"></span>
+                  Integrations
+                  <span class="menu-arrow" data-feather="chevron-right"></span>
+                </a>
+                <div class="collapse" id="Integrations">
+                    <ul class="nav flex-column sub-menu">
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link sub-menu-link" href="">#}
+{#                                <span data-feather="chevron-down"></span>#}
+{#                                1#}
+{#                            </a>#}
+{#                        </li>#}
+                    </ul>
+                </div>
+              </li>
+            </ul>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+              <span>Saved reports</span>
+              <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                <span data-feather="plus-circle"></span>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <span data-feather="file-text"></span>
+                  Current month
+                </a>
+              </li>
+            </ul>
+
+            <div>
+                {# TODO 注册日期对不上 #}
+                <p>The local date and time is {{ moment(current_time).format('MMMM Do YYYY, h:mm:ss a') }}.</p>
+                <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+            </div>
+
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        {% block main %}
+
+        {% endblock %}
+        </main>
+
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block scripts %}
+        {# Moment() #}
+        {{ moment.include_moment() }}
+        {{ moment.locale('zh-cn') }}   {#选择语言#}
+
+        {# PageDown() #}
+        {{ pagedown.include_pagedown() }}
+
+{#        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>#}
+{#        <script>window.jQuery || document.write('<script src="../static/temp/assets/js/vendor/jquery.slim.min.js"><\/script>')</script>#}
+        <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+{#        <script src="../static/temp/assets/dist/js/bootstrap.bundle.min.js"></script>#}
+        <script src="{{ url_for('static', filename='bootstrap-4.6.1-dist/js/bootstrap.bundle.js') }}"></script>
+{#        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>#}
+        {# 图标库 https://feathericons.com #}
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+{#        <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>#}
+        <script>
+            feather.replace()  {# 所有具有 data-feather 属性的元素都将替换为与其 data-feather 属性值相对应的 SVG 标记 #}
+        </script>
+
+        <script>
+            $(function () {
+                {# 侧边栏折叠 active 切换 & 添加 html 标签 #}
+                {#console.log(location.pathname)#}
+                var pathlastname = location.pathname.split("/").slice(-2)[0]
+                {#console.log(pathlastname)#}
+                // 无折叠的
+                $("#sidebarMenu").find("a.menu-link").each(function () {
+                    if ($(this).attr("href") === location.pathname) {
+                        $(this).addClass("active");
+                        {#var text = $(this).text()#}
+                        var html = "<span class='sr-only'>(current)</span>";
+                        $(this).append(html);
+
+                    } else {
+                        $(this).removeClass("active");
+                        $(this).find(".sr-only").remove();
+                    }
+                });
+                // 有折叠的
+                $("#sidebarMenu").find("a.sub-menu-link").each(function () {
+                    var id = $(this).attr("href").split("/").slice(-2)[0];
+                    if( id === pathlastname) {
+                        {#console.log(id)#}
+                        $("#" + id).collapse('show');
+                        $(this).addClass("active");
+                        var html = "<span class='sr-only'>(current)</span>";
+                        $(this).append(html);
+                    } else {
+                        $("#" + id).collapse('hide');
+                        $(this).removeClass("active");
+                        $(this).find(".sr-only").remove();
+                    }
+                });
+            });
+
+            // 给 sidebarMenu 添加绑定事件：on
+            // show.bs.collapse： show事件发生时
+            // .collapse 元素回调方法 将.collapse.show的全部隐藏
+            $('#sidebarMenu').on('show.bs.collapse', '.collapse', function() {
+                $('#sidebarMenu').find('.collapse.show').collapse('hide');
+            });
+
+            
+        </script>
+
+    {% endblock %}
+
+  </body>
+</html>

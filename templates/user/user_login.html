@@ -1,0 +1,301 @@
+{% extends "base.html"%}
+
+{% block title %}登录注册{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        html,
+        body {
+          height: 100%;
+        }
+
+        body {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center;
+          padding-top: 40px;
+          padding-bottom: 40px;
+          background-color: #f5f5f5;
+        }
+
+        .form-signin {
+          width: 100%;
+          max-width: 430px;
+          padding: 15px;
+          margin: auto;
+        }
+
+        .form-borderline {
+            width: 100%;
+            max-width: 360px;
+            padding: 0px 25px 25px 25px;
+            margin: auto;
+            border: 1px solid rgb(222, 223, 224);
+            border-radius: 4px;
+        }
+
+        .form-borderline ul {
+                border-bottom: 1px solid rgb(222, 223, 224);
+        }
+
+        .bottom-line {
+            color: rgb(95, 99, 104);
+            font-size: 1.1rem;
+            height: 100%;
+            display: flex;
+            white-space: nowrap;
+            -webkit-box-align: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .bottom-line span {
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            height: 3px;
+            width: 100%;
+            background-color: rgb(32, 33, 36);
+            border: none;
+            border-radius: 3px 3px 0px 0px;
+        }
+
+        .bottom-flex {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+        }
+
+        .bottom-flex button {
+            padding: 0px 24px;
+            border-radius: 20px;
+            height: 36px;
+            align-items: center;
+            font-weight: 700;
+            background-color:#F5F5F5;
+            border-color: #F5F5F5;
+        }
+
+        .form-signin .checkbox {
+          font-weight: 400;
+        }
+
+        .form-signin .form-control {
+          position: relative;
+          box-sizing: border-box;
+          height: auto;
+          padding: 10px;
+          font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+          z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+          margin-bottom: -1px;
+          border-bottom-right-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+          margin-bottom: 10px;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+        }
+
+        .urllink {
+            color: rgb(0, 138, 188);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .urllink:hover {
+            color: #20beff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="text-center form-signin">
+        <img class="mb-4" src="{{ url_for('static', filename='upload/logo/bootstrap-solid.svg') }}" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">欢迎使用AICenter</h1>
+
+        <div class="form-borderline">
+
+            <ul class="nav mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                        <a class="nav-link bottom-line active" id="pills-login-tab" data-toggle="pill" href="#pills-login" role="tab" aria-controls="pills-login" aria-selected="true">
+                            登录
+{#                            <span></span>#}
+                        </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                        <a class="nav-link bottom-line" id="pills-register-tab" data-toggle="pill" href="#pills-register" role="tab" aria-controls="pills-register" aria-selected="false">
+                            注册
+{#                            <span></span>#}
+                        </a>
+
+                </li>
+            </ul>
+
+            <div class="tab-content" id="pills-tabContent">
+                {# 登录 #}
+                <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
+                    {# TODO: 邮箱登录 & 流式表单 & 忘记用户名 #}
+                    <form class="needs-validation" novalidate action="{{ url_for('user.user_login') }}" method="post">
+                        <p>
+                            {{ loginform.login_name.label(class="sr-only") }}{{ loginform.login_name }}
+                            {% if loginform.login_name.errors %}
+                                <small>{{ loginform.login_name.errors.0 }}</small>
+                            {% endif %}
+                        </p>
+
+                        <p>
+                            {{ loginform.login_pwd.label(class="sr-only") }}{{ loginform.login_pwd }}
+                            {% if loginform.login_pwd.errors %}
+                                <small>{{ loginform.login_pwd.errors.0 }}</small>
+                            {% endif %}
+                        </p>
+
+                        <div class="bottom-flex">
+                            <button type="reset" class="btn btn-light" onclick="window.location.href='{{ url_for('article.index') }}'">返回</button>
+{#                            <a role="button" class="btn btn-light" href="{{ url_for('article.index') }}">返回</a>#}
+                            {{ loginform.login_submit }}{{ loginform.csrf_token(id="login_csrf_token") }}
+                        </div>
+
+                        <div style="margin-top: 36px">
+                            忘记
+                            <a class="urllink" href="#">用户名</a>
+                            <span> / </span>
+                            <a class="urllink" href="{{ url_for('user.user_reset_pwd_request') }}">密码</a>
+                            ？
+                        </div>
+                    </form>
+                </div>
+
+                {# 注册 #}
+                <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
+
+                    <form class="needs-validation" novalidate action="{{ url_for('user.user_login') }}" method="post">
+                        <p>
+                            {{ registerform.register_name.label(class="sr-only") }}{{ registerform.register_name }}
+                            {% if registerform.register_name.errors %}
+                                <small>{{ registerform.register_name.errors.0 }}</small>
+                            {% endif %}
+                        </p>
+
+                        <p>
+                            {{ registerform.register_email.label(class="sr-only") }}{{ registerform.register_email }}
+                            {% if registerform.register_email.errors %}
+                                <small>{{ registerform.register_email.errors.0 }}</small>
+                            {% endif %}
+                        </p>
+
+{#                        <p>#}
+{#                            {{ registerform.register_phone.label(class="sr-only") }}{{ registerform.register_phone }}#}
+{#                            {% if registerform.register_phone.errors %}#}
+{#                                <small>{{ registerform.register_phone.errors.0 }}</small>#}
+{#                            {% endif %}#}
+{#                        </p>#}
+
+                        <p>
+                            {{ registerform.register_pwd.label(class="sr-only") }}{{ registerform.register_pwd }}
+                            {% if registerform.register_pwd.errors %}
+                                <small>{{ registerform.register_pwd.errors.0 }}</small>
+                            {% endif %}
+                        </p>
+
+                        <p>
+                            {{ registerform.register_repwd.label(class="sr-only") }}{{ registerform.register_repwd }}
+                            {% if registerform.register_repwd.errors %}
+                                <small>{{ registerform.register_repwd.errors.0 }}</small>
+                            {% endif %}
+                        </p>
+
+                        <div class="bottom-flex">
+                            <button type="reset" class="btn btn-light" onclick="window.location.href='{{ url_for('article.index') }}'">返回</button>
+                            {{ registerform.register_submit }}{{ registerform.csrf_token(id="register_csrf_token") }}
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% with msgs = get_flashed_messages(with_categories=True) %}
+                  {% if msgs %}
+                      <ul>
+                          {% for category, msg in msgs %}
+                              <li class="{{ category }}" >{{ msg }}</li>
+                          {% endfor %}
+                      </ul>
+                  {% endif %}
+            {% endwith %}
+        </div>
+
+        <p class="mt-5 mb-3 text-muted">&copy; 2022-2023</p>
+    </div>
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+<script src="{{ url_for('static', filename='extends/jbvalidator/jbvalidator.min.js') }}"></script>
+<script>
+    $(function (){
+        // 载入页面时，将 active 的标签加入 span
+         $(".bottom-line").each(function () {
+             if($(this).hasClass("active")) {
+                 $(this).css("color", "rgb(32, 33, 36)")
+                 $(this).append("<span></span>")
+             }
+        })
+
+        // jbvalidator 客户端表单验证
+        let validator = $('form.needs-validation').jbvalidator({
+            errorMessage: true,
+            successClass: true,
+            // 配置默认验证信息
+            {#language: "https://emretulek.github.io/jbvalidator/dist/lang/tr.json",#}
+            language: "{{ url_for('static', filename='extends/jbvalidator/ch.json') }}",
+        });
+
+        //custom validate methode
+        validator.validator.custom = function(el, event){
+            if($(el).is('[name=login_name]') && $(el).val().length < 3){
+                return 'Your password is too weak.';
+            }
+
+        }
+
+        {#validator.checkAll();  // 在不提交表单的情况下显示错误，返回错误计数#}
+        {#validator.errorTrigger();  // 显示从服务器返回的错误消息#}
+        validator.reload();  // 添加动态元素后重新加载实例
+    })
+
+    // 点击事件加入span
+    $("#pills-login-tab").click(function () {
+        $(this).append("<span></span>")
+        $(this).css("color", "rgb(32, 33, 36)")
+        $("#pills-register-tab").find("span").remove()
+        $("#pills-register-tab").css("color", "rgb(95, 99, 104)")
+    })
+    $("#pills-register-tab").click(function () {
+        $(this).append("<span></span>")
+        $(this).css("color", "rgb(32, 33, 36)")
+        $("#pills-login-tab").find("span").remove("span")
+        $("#pills-login-tab").css("color", "rgb(95, 99, 104)")
+    })
+
+
+</script>
+{% endblock %}

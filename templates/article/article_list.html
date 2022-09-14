@@ -1,0 +1,74 @@
+{% extends "base.html"%}
+{% import "ui/list_page.html" as pg%}
+
+{% block title %}文章列表{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div id="auth_list">
+        <h3 style="color:red">role_list</h3>
+            {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+            {% endwith %}
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>文章名</th>
+                <th>标签</th>
+                <th>星级</th>
+                <th>阅读量</th>
+                <th>作者</th>
+                <th>评论数量</th>
+                <th>上映时间</th>
+                <th>操作事项</th>
+            </tr>
+            {% for v in auth_page.items %}
+            <tr>
+                <td>{{ v.id }}</td>
+                <td><a href="{{ url_for("article.article_page", article_id=v.id) }}">{{ v.title }}</a></td>
+                <td>{{ v.tag.tag_name }}</td>
+                <td>{{ v.star }}</td>
+                <td>{{ v.read_num }}</td>
+                <td>{{ v.user.name }}</td>
+                <td>{{ v.comment_num }}</td>
+                <td>{{ v.addtime }}</td>
+                <td>
+                    <a href="{{ url_for('article.article_add', article_id=v.id, edit=1) }}">编辑</a>
+                    <a href="{{ url_for('article.article_del', article_id=v.id, page=auth_page.page) }}">删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {{ pg.page(auth_page, "article.article_list") }}
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

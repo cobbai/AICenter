@@ -1,0 +1,27 @@
+{% extends "base.html"%}
+{% import "bootstrap/wtf.html" as wtf %}  {#flask-wtf包中导入#}
+
+{% block title %}使用wtf-form快速建表单{% endblock %}
+
+
+{% block main %}
+    {#获取闪现消息#}
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+          {% if msgs %}
+              <ul>
+                  {% for category, msg in msgs %}
+                      <li class="{{ category }}" >{{ msg }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+    {% endwith %}
+
+    {#快速创建表单#}
+    {{ wtf.quick_form(form) }}
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

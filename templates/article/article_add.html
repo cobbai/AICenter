@@ -1,0 +1,109 @@
+{% extends "base.html"%}
+
+{% block title %}添加文章{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div id="role">
+        {# wtf.from_field(form.body) #}
+        <form action="{% if edit %} {{ url_for('article.article_add', article_id=article_id, edit=edit) }} {% else %} {{ url_for('article.article_add') }} {% endif %}" method="post" enctype="multipart/form-data">
+
+            {% with msgs = get_flashed_messages(with_categories=True) %}
+                  {% if msgs %}
+                      <ul>
+                          {% for category, msg in msgs %}
+                              <li class="{{ category }}" >{{ msg }}</li>
+                          {% endfor %}
+                      </ul>
+                  {% endif %}
+            {% endwith %}
+
+            <p>{{ form.title.label }}{{ form.title }}</p>
+                {% for message in form.title.errors %}
+                        <small class="error">{{ message }}</small><br>
+                {% endfor %}
+
+            <p>{{ form.body.label }}{{ form.body }}</p>
+                {% for message in form.body.errors %}
+                        <small class="error">{{ message }}</small><br>
+                {% endfor %}
+
+            <p>{{ form.tag.label }}{{ form.tag }}</p>
+                {% for message in form.tag.errors %}
+                        <small class="error">{{ message }}</small><br>
+                {% endfor %}
+
+            <p>{{ form.submit }}{{ form.csrf_token }}</p>
+
+          </form>
+
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+    {{ super() }}
+    {# 富文本编辑器tinymce #}
+    <script src="{{ url_for('static', filename='extends/tinymce_6.1.0/tinymce.min.js') }}"></script>
+    <script>
+        tinymce.init({
+            selector: '.content_area',  //容器，可使用css选择器
+            language:'zh-Hans', //调用放在langs文件夹内的语言包
+            {#toolbar: false, //隐藏工具栏#}
+            {#menubar: false, //隐藏菜单栏#}
+            {#inline: true, //开启内联模式#}
+            {#height:400,  //高度为400， 有 autoresize 代替#}
+            auto_focus: true,  // 让编辑器加载完成后自动获得光标焦点
+            branding: false,  // 隐藏编辑器界面右下角的“Powered by Tiny”
+            // 插件栏文件 plugins
+            plugins: 'quickbars preview fullscreen searchreplace pagebreak insertdatetime ' +
+                'autolink link anchor image media template code codesample table charmap emoticons ' +
+                'visualblocks visualchars nonbreaking ' +
+                'lists advlist wordcount help autosave autoresize',
+            // 工具栏
+            // 工具栏
+            toolbar: [
+                'styles fontsize fontfamily | alignleft aligncenter alignright lineheight outdent indent bullist numlist',
+                'restoredraft searchreplace | codesample table image media charmap emoticons hr pagebreak insertdatetime',
+            ],
+            // 右键菜单
+            contextmenu: "cut copy paste pastetext link anchor",
+            // quickbars
+            quickbars_selection_toolbar: "forecolor backcolor styles fontsize | lineheight removeformat",
+            quickbars_insert_toolbar:"",
+            // 上传图片后端处理地址
+            images_upload_url:{% if article_id %}"picture?article_id=" + {{ article_id }} {% else %} "picture" {% endif %},  // 选择好图片后的路由地址
+            relative_urls: false,  // 禁用图片相对路径地址，否则前端会加上 路由的prefix
+            {#images_upload_base_path:"",  #}
+            // 编辑区内的css：限制图片大下 行高
+            content_style:"img {max-width: 1280px; max-height: 760px}",
+            //字体大小
+            font_size_formats: '12px 14px 16px 18px 24px 36px 48px 56px 72px',
+            font_family_formats: '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
+            line_height_formats: '0.5 1 1.2 1.5 1.6 1.8 2 2.4', // 行高定义
+
+            //按tab不换行
+            nonbreaking_force_tab: true,
+            codesample_global_prismjs:true
+        });
+    </script>
+
+{% endblock %}

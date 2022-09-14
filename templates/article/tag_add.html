@@ -1,0 +1,59 @@
+{% extends "base.html"%}
+
+{% block title %}<title>添加标签</title>{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block middle %}
+
+    <div id="role">
+
+        {% if edit_flag == 'edit' %}
+            <form action="{{ url_for('article.tag_edit', id=id) }}" method="post">
+        {% else %}
+            <form action="{{ url_for('article.tag_add') }}" method="post">
+        {% endif %}
+
+        {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+        {% endwith %}
+
+        <p>{{ form.name.label }}{{ form.name }}</p>
+            {% for message in form.name.errors %}
+                    <small class="error">{{ message }}</small><br>
+            {% endfor %}
+
+        <p>{{ form.submit }}{{ form.csrf_token }}</p>
+
+      </form>
+
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

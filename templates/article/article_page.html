@@ -1,0 +1,115 @@
+{% extends "base.html"%}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "ui/list_page.html" as pg%}
+{% block title %}添加文章{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+
+        ul.comments {
+            list-style-type: none;
+            padding: 0px;
+            margin: 16px 0px 0px 0px;
+        }
+        ul.comments li.comment {
+            margin-left: 32px;
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        ul.comments li.comment:nth-child(1) {
+            border-top: 1px solid #e0e0e0;
+        }
+        ul.comments li.comment:hover {
+            background-color: #f0f0f0;
+        }
+        div.comment-date {
+            float: right;
+        }
+        div.comment-author {
+            font-weight: bold;
+        }
+        div.comment-thumbnail {
+            position: absolute;
+        }
+        div.comment-content {
+            margin-left: 48px;
+            min-height: 48px;
+        }
+    </style>
+{% endblock %}
+
+{% block links %}
+    {{ super() }}
+    {# 前端渲染彩色代码块prism #}
+    <link type="text/css" href="{{ url_for('static', filename='extends/prism/prism.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+
+   <div>{{ article.title }}</div>  {# 标题 #}
+   <div>{{ article.user.name }}</div>  {# 作者 #}
+   <div>{{ article.star }}</div>  {# 星级 #}
+   <div>{{ article.read_num }}</div>  {# 阅读量 #}
+   <div>{{ article.comment_num }}</div>  {# 评论量 #}
+   <div>{{ article.addtime }}</div>  {# 时间 #}
+   <div>{{ article.tag.tag_name }}</div>  {# 分类 #}
+    {# 内容 #}
+   <div>
+{#        {%  if article.body_html %}#}
+{#            {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
+{#        {% else %}#}
+{#            {{ article.body_blob.decode('utf-8') | safe }}#}
+{#        {% endif %}#}
+        {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
+   </div>
+
+    {# 固定地址 #}
+    <div>
+        <a href="{{ url_for('article.article_page', article_id=article.id) }}">
+            <span>文章固定地址</span>
+        </a>
+    </div>
+
+    {# 编辑 #}
+    <div>
+        {% if article.user == current_user or current_user.can(Permission.ADMIN)%}
+            <a href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
+                <span>编辑</span>
+            </a>
+        {% endif %}
+    </div>
+
+    {# 评论 #}
+    <div>
+        {# id="comments" 提供url片段标记 #}
+        <h4 id="comments">Comments</h4>
+        {% if current_user.can(Permission.COMMENT) %}
+            <div>
+                {{ wtf.quick_form(form) }}
+            </div>
+        {% endif %}
+        {% include 'ui/_comments.html' %}
+        {# #comments url片段#用来标记滚动条起始位置 #}
+        {# 使得翻页时候能直接定位再评论位置 #}
+        {{ pg.page(pagination, "article.article_page", fragment='#comments', article_id=article.id) }}
+
+    </div>
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+    {{ super() }}
+    {# 前端渲染彩色代码块prism #}
+    <script src="{{ url_for('static', filename='extends/prism/prism.js') }}"></script>
+{% endblock %}

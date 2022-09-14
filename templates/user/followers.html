@@ -1,0 +1,77 @@
+{% extends "base.html"%}
+{% import "ui/list_page.html" as pg%}
+{% block title %}会员中心{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .info{
+            color: deepskyblue;
+        }
+        .warning{
+            color: orange;
+        }
+        .error{
+            color: red;
+        }
+
+        .profile-thumbnail {
+            position: absolute;
+        }
+
+        ul.blogs {
+            list-style-type: none;{# 设置列表项标记的类型 #}
+            padding: 0px;
+            margin: 16px 0px 0px 0px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        ul.blogs li.blog {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        {# 鼠标以上去背景变色 #}
+        ul.blogs li.blog:hover {
+            background-color: #f0f0f0;
+        }
+
+        div.blog-date {float: right;}
+        div.blog-user {font-weight: bold;}
+
+        div.blog-content {
+            margin-left: 48px;
+            min-height: 48px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block main %}
+
+    <div class="page-header">
+        <h1>{{ title }} {{ user.name }}</h1>
+    </div>
+    <table class="table table-hover followers">
+        <thead><tr><th>User</th><th>Since</th></tr></thead>
+        {% for i in follows %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('user.user_detail', uid = i.user.id) }}">
+    {#                    <img class="img-rounded" src="">#}
+                        {{ i.user.name }}
+                    </a>
+                </td>
+                <td>{{ moment(i.timestamp).format('L') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {{ pg.page(pagination, "user" + endpoint, uid=user.id) }}
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

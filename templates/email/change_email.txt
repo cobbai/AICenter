@@ -1,0 +1,7 @@
+Dear {{ user.name }},
+Welcome to Cobb_AIweb!
+To confirm your account please click on the following link:
+{{ url_for('user.user_change_email', token=token, _external=True) }}
+Sincerely,
+The Cobb_AIweb Team
+Note: replies to this email address are not monitored.
