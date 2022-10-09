@@ -36,20 +36,6 @@ class Blog(db.Model):
 # SQLAlchemy“set”事件的监听程序，只要body字段设了新值，on_changed_body()就会自动被调用
 db.event.listen(Blog.body, 'set', Blog.on_changed_body)
 
-
-# 文章标签
-class Tag(db.Model):
-    __tablename__ = 'tag'
-    id = db.Column(db.Integer, primary_key=True)  # 编号
-    tag_name = db.Column(db.String(100), unique=True)  # 标签名
-    addtime = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # 标签的添加时间
-
-    articles = db.relationship('Article', backref='tag')  # Tag 下的 Article 用 articles
-
-    def __repr__(self):
-        return '<Tag %r>' % self.tag_name
-
-
 # 文章
 class Article(db.Model):
     __tablename__ = 'article'

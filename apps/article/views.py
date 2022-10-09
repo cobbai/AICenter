@@ -14,81 +14,6 @@ from bs4 import BeautifulSoup
 article_bp = Blueprint("article", __name__, url_prefix="/article")
 
 
-# """标签管理"""
-# # 1.添加标签
-# @article_bp.route("/article/tag_add/", methods=['GET', 'POST'])
-# # @admin_auth
-# def tag_add():
-#     form = TagForm()
-#     edit_flag = request.args.get("edit_flag")
-#
-#     if form.validate_on_submit():
-#         data = form.data
-#         tag = Tag(
-#             name=data["name"]
-#         )
-#         db.session.add(tag)
-#         db.session.commit()
-#         flash('添加标签成功!', 'ok')
-#         # 当前管理员添加了标签，添加操作日志
-#         oplog = Oplog(
-#             admin_id=session["admin_id"],
-#             ip=request.remote_addr,
-#             reason='添加标签:' + data['name']
-#         )
-#         db.session.add(oplog)
-#         db.session.commit()
-#         return redirect(url_for('article.tag_add'))
-#     return render_template('movie/tag_add.html', form=form, edit_flag=edit_flag)
-#
-#
-# # 2.标签列表
-# @article_bp.route("/article/tag_list/", methods=["GET"])
-# def tag_list():
-#     page = int(request.args.get('page', 1))
-#     auth_page = Tag.query.order_by(
-#         Tag.addtime.desc()
-#     ).paginate(page=page, per_page=2)
-#     return render_template("movie/tag_list.html", auth_page=auth_page)
-#
-#
-# # 3.删除标签
-# @article_bp.route("/article/tag_del/", methods=["GET"])
-# def tag_del():
-#     id = request.args.get("id")
-#     tag = Tag.query.filter_by(id=id).first_or_404()
-#     db.session.delete(tag)
-#     db.session.commit()
-#     flash('删除标签成功!', 'warning')
-#     return redirect(url_for("article.tag_list", page=1))
-#
-#
-# # 4. 编辑标签
-# @article_bp.route('/article/tag_edit/', methods=['GET', 'POST'])
-# def tag_edit():
-#     form = TagForm()
-#     edit_flag = request.args.get("edit_flag")
-#     id = request.args.get("id")
-#     tag = Tag.query.get_or_404(id)
-#     # 前台表单框里 展示目前状态
-#     if request.method == "GET":
-#         form.name.data = tag.name
-#     # 修改提交表单后
-#     if form.validate_on_submit():
-#         data = form.data
-#         # auth_count =Auth.query.filter_by(name=data["name"]).count()
-#         # 验证名字是否修改
-#         if tag.name == data["name"]:
-#             flash("提交的新name已存在，请重新输入", "temp")
-#             return redirect(url_for("article.tag_edit", id=id, edit_flag="edit"))
-#         tag.name = data["name"]
-#         db.session.add(tag)
-#         db.session.commit()
-#         flash('修改标签成功!', 'info')
-#         return redirect(url_for('article.tag_edit', id=tag.id, edit_flag="edit"))
-#     return render_template('movie/tag_add.html', form=form, edit_flag=edit_flag, id=id)
-
-
 # 通过装饰器传参数，让装饰器自己接受参数
 def need_permission(perm):
     # 自定义装饰器：角色权限访问控制装饰器
@@ -102,39 +27,8 @@ def need_permission(perm):
     return decorator
 
 
-# 0.博客首页
-@article_bp.route('/index', methods=['GET', 'POST'])
-def index():
-    page = int(request.args.get('page', 1))
-    form = BlogPostForm()
-    # 匿名用户可以看，但不能添加博客
-    if not current_user.is_anonymous and form.validate_on_submit():
-        blog = Blog(
-            body=form.body.data,
-            user=current_user._get_current_object(),  # current_user只是用户对象的轻度包装。_get_current_object()返回数据库需要的真正用户对象
-        )
-        db.session.add(blog)
-        db.session.commit()
-        return redirect(url_for('article.index'))
-
-    # 显示关注人的博客
-    show_followed = False
-    if current_user.is_authenticated:
-        show_followed = bool(request.cookies.get('show_followed', ''))
-    if show_followed:
-        query = current_user.followed_blogs  # Model里的property方法
-    else:
-        query = Blog.query
-
-    blog_page = query.order_by(
-        Blog.timestamp.desc()
-    ).paginate(page=page, per_page=5)
-    blogs = blog_page.items  # 返回分页后的项目
-    return render_template("index.html", form=form, blogs=blogs, blog_page=blog_page)
-
-
 # 1.文章页
-@article_bp.route('/article_page/<int:article_id>', methods=['GET', 'POST'])
+@article_bp.route('/article_page/<int:article_id>/', methods=['GET', 'POST'])
 def article_page(article_id):
     article = Article.query.get_or_404(article_id)
     # 评论
@@ -156,7 +50,7 @@ def article_page(article_id):
 
 
 # 2.编辑文章
-@article_bp.route('/article_add', methods=['GET', 'POST'])
+@article_bp.route('/article_add/', methods=['GET', 'POST'])
 @login_required
 @need_permission(Permission.WRITE)
 def article_add():
@@ -229,25 +123,25 @@ def article_add():
 
 
 # 3.文章列表
-@article_bp.route('/article_list', methods=['GET', 'POST'])
+@article_bp.route('/article_list/<int:tag_id>', methods=['GET', 'POST'])
 @login_required
 @need_permission(Permission.WRITE)
-def article_list():
-    page = int(request.args.get('page', 1))
+def article_list(tag_id):
     # 不写join条件将默认使用外键关联
-    auth_page = Article.query.order_by(
-        Article.addtime.desc()
-    ).paginate(page=page, per_page=5)
-    return render_template("article/article_list.html", auth_page=auth_page)
+    articles = Article.query.filter_by(
+        tag_id=tag_id
+    ).all()
+
+    return render_template("article/article_list.html", articles=articles)
 
 
 # 4.删除文章
-@article_bp.route("/article_del", methods=["GET"])
+@article_bp.route("/article_del/", methods=["GET"])
 @login_required
 @need_permission(Permission.WRITE)
 def article_del():
     article_id = request.args.get("article_id")
-    page = int(request.args.get('page', 1))
+    tag_id = int(request.args.get('tag_id', 1))
 
     article = Article.query.filter_by(id=article_id).first_or_404()
     # 删除文章中的图片
@@ -271,11 +165,11 @@ def article_del():
     # )
     # db.session.add(oplog)
     # db.session.commit()
-    return redirect(url_for("article.article_list", page=page))
+    return redirect(url_for("article.article_list", tag_id=tag_id))
 
 
 # 5.图片上传
-@article_bp.route("/picture", methods=["GET", "POST"])
+@article_bp.route("/picture/", methods=["GET", "POST"])
 @login_required
 @need_permission(Permission.WRITE)
 def picture():
@@ -298,27 +192,27 @@ def picture():
 
 
 # 1.所有人的博客
-@article_bp.route('/show_all')
+@article_bp.route('/show_all/')
 @login_required
 def show_all():
     # make_response 创建响应对象，指定好 cookie 后重定向到首页
-    resp = make_response(redirect(url_for('article.index')))
+    resp = make_response(redirect(url_for('user.index')))
     resp.set_cookie('show_followed', '', max_age=30*24*60*60)
     return resp
 
 
 # 2.关注人的博客
-@article_bp.route('/show_followed')
+@article_bp.route('/show_followed/')
 @login_required
 def show_followed():
     # make_response 创建响应对象，指定好 cookie 后重定向到首页
-    resp = make_response(redirect(url_for('article.index')))
+    resp = make_response(redirect(url_for('user.index')))
     resp.set_cookie('show_followed', '1', max_age=30*24*60*60)
     return resp
 
 
 # 1.评论列表
-@article_bp.route("/comment_list", methods=["GET"])
+@article_bp.route("/comment_list/", methods=["GET"])
 @login_required
 @need_permission(Permission.MODERATE)
 def comment_list():
@@ -330,7 +224,7 @@ def comment_list():
 
 
 # 2.编辑评论
-@article_bp.route("/comment_edit/<int:comment_id>", methods=["GET"])
+@article_bp.route("/comment_edit/<int:comment_id>/", methods=["GET"])
 @login_required
 @need_permission(Permission.MODERATE)
 def comment_edit(comment_id):
@@ -369,4 +263,5 @@ def comment_edit(comment_id):
 #     db.session.commit()
 #     flash('删除收藏成功!', 'warning')
 #     return redirect(url_for("article.moviecol", page=1))
+
 

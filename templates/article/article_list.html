@@ -1,36 +1,33 @@
 {% extends "base.html"%}
-{% import "ui/list_page.html" as pg%}
 
 {% block title %}文章列表{% endblock %}
 
 {% block styles %}
-    {{ super() }}
     <style>
-        .info{
-            color: deepskyblue;
-        }
-        .warning{
-            color: orange;
-        }
-        .error{
-            color: red;
-        }
+
     </style>
+
 {% endblock %}
 
 {% block main %}
 
-    <div id="auth_list">
-        <h3 style="color:red">role_list</h3>
-            {% with msgs = get_flashed_messages(with_categories=True) %}
-              {% if msgs %}
-                  <ul>
-                      {% for category, msg in msgs %}
-                          <li class="{{ category }}" >{{ msg }}</li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-            {% endwith %}
+    <h1>算法文章</h1>
+    <p>当前版本仅供管理员添加删除修改</p>
+    <p>当前版本仅供管理员添加删除修改</p>
+
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+      {% if msgs %}
+          <ul>
+              {% for category, msg in msgs %}
+                  <li class="{{ category }}" >{{ msg }}</li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+    {% endwith %}
+
+
+    <div id="article_list">
+        <h3 class="text-info">role_list</h3>
         <table>
             <tr>
                 <th>编号</th>
@@ -43,7 +40,7 @@
                 <th>上映时间</th>
                 <th>操作事项</th>
             </tr>
-            {% for v in auth_page.items %}
+            {% for v in articles %}
             <tr>
                 <td>{{ v.id }}</td>
                 <td><a href="{{ url_for("article.article_page", article_id=v.id) }}">{{ v.title }}</a></td>
@@ -55,12 +52,11 @@
                 <td>{{ v.addtime }}</td>
                 <td>
                     <a href="{{ url_for('article.article_add', article_id=v.id, edit=1) }}">编辑</a>
-                    <a href="{{ url_for('article.article_del', article_id=v.id, page=auth_page.page) }}">删除</a>
+                    <a href="{{ url_for('article.article_del', article_id=v.id, page=v.tag_id) }}">删除</a>
                 </td>
             </tr>
             {% endfor %}
         </table>
-        {{ pg.page(auth_page, "article.article_list") }}
     </div>
 
 

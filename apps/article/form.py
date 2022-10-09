@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileRequired, FileAllowed
 from flask_pagedown.fields import PageDownField
 from wtforms import StringField, PasswordField, SubmitField, SelectField, SelectMultipleField, TextAreaField
 from wtforms.validators import DataRequired, Length, ValidationError, EqualTo, Email, Regexp
-from apps.article.model import Tag
+from apps.auth.model import Tag
 
 
 class ArticlePostForm(FlaskForm):

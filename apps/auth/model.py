@@ -76,3 +76,15 @@ class Role(db.Model):
             db.session.add(role)
         db.session.commit()
 
+
+# 文章标签
+class Tag(db.Model):
+    __tablename__ = 'tag'
+    id = db.Column(db.Integer, primary_key=True)  # 编号
+    tag_name = db.Column(db.String(100), unique=True)  # 标签名
+    addtime = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # 标签的添加时间
+
+    articles = db.relationship('Article', backref='tag')  # Tag 下的 Article 用 articles
+
+    def __repr__(self):
+        return '<Tag %r>' % self.tag_name

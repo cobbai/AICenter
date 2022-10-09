@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}添加标签{% endblock %}
+
+
+
+{% block main %}
+
+    <div id="role">
+
+        <form action="{% if edit %} {{ url_for('auth.tag_add', tag_id=tag_id, edit=edit) }} {% else %} {{ url_for('auth.tag_add') }} {% endif %}" method="post" enctype="multipart/form-data">
+
+        {% with msgs = get_flashed_messages(with_categories=True) %}
+              {% if msgs %}
+                  <ul>
+                      {% for category, msg in msgs %}
+                          <li class="{{ category }}" >{{ msg }}</li>
+                      {% endfor %}
+                  </ul>
+              {% endif %}
+        {% endwith %}
+
+        <p>{{ form.new_tag.label }}{{ form.new_tag }}</p>
+            {% for message in form.new_tag.errors %}
+                    <small class="error">{{ message }}</small><br>
+            {% endfor %}
+
+        <p>{{ form.tag.label }}{{ form.tag }}</p>
+            {% for message in form.tag.errors %}
+                    <small class="error">{{ message }}</small><br>
+            {% endfor %}
+
+        <p>{{ form.submit }}{{ form.csrf_token }}</p>
+
+      </form>
+
+    </div>
+
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+{% endblock %}

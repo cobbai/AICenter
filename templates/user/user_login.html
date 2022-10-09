@@ -164,8 +164,8 @@
                         </p>
 
                         <div class="bottom-flex">
-                            <button type="reset" class="btn btn-light" onclick="window.location.href='{{ url_for('article.index') }}'">返回</button>
-{#                            <a role="button" class="btn btn-light" href="{{ url_for('article.index') }}">返回</a>#}
+                            <button type="reset" class="btn btn-light" onclick="window.location.href='{{ url_for('user.index') }}'">返回</button>
+{#                            <a role="button" class="btn btn-light" href="{{ url_for('user.index') }}">返回</a>#}
                             {{ loginform.login_submit }}{{ loginform.csrf_token(id="login_csrf_token") }}
                         </div>
 
@@ -219,7 +219,7 @@
                         </p>
 
                         <div class="bottom-flex">
-                            <button type="reset" class="btn btn-light" onclick="window.location.href='{{ url_for('article.index') }}'">返回</button>
+                            <button type="reset" class="btn btn-light" onclick="window.location.href='{{ url_for('user.index') }}'">返回</button>
                             {{ registerform.register_submit }}{{ registerform.csrf_token(id="register_csrf_token") }}
                         </div>
                     </form>

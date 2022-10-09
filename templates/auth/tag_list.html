@@ -1,7 +1,7 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 {% import "ui/list_page.html" as pg%}
 
-{% block title %}<title>标签列表</title>{% endblock %}
+{% block title %}文章标签列表{% endblock %}
 
 {% block styles %}
     {{ super() }}
@@ -18,9 +18,9 @@
     </style>
 {% endblock %}
 
-{% block middle %}
+{% block main %}
 
-    <div id="auth_list">
+    <div>
         <h3 style="color:red">role_list</h3>
             {% with msgs = get_flashed_messages(with_categories=True) %}
               {% if msgs %}
@@ -38,19 +38,19 @@
                 <th>添加时间</th>
                 <th>操作事项</th>
             </tr>
-            {% for v in auth_page.items %}
+            {% for v in tag_page.items %}
             <tr>
                 <td>{{ v.id }}</td>
-                <td>{{ v.name }}</td>
+                <td>{{ v.tag_name }}</td>
                 <td>{{ v.addtime }}</td>
                 <td>
-                    <a href="{{ url_for('article.tag_edit', id=v.id, edit_flag='edit') }}">编辑</a>
-                    <a href="{{ url_for('article.tag_del', id=v.id) }}">删除</a>
+                    <a href="{{ url_for('auth.tag_add', tag_id=v.id, edit=1) }}">编辑</a>
+                    <a href="{{ url_for('auth.tag_del', tag_id=v.id) }}">删除</a>
                 </td>
             </tr>
             {% endfor %}
         </table>
-        {{ pg.page(auth_page, "article.tag_list") }}
+        {{ pg.page(tag_page, "auth.tag_list") }}
     </div>
 
 

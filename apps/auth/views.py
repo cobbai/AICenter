@@ -1,5 +1,6 @@
 from flask import Blueprint, request, flash, redirect, url_for, render_template, abort
 from flask_login import login_required, current_user
+
 from apps.auth.form import *
 from apps.auth.model import *
 from apps.user.model import *
@@ -23,7 +24,7 @@ def need_permission(perm):
 
 # TODO：搜索指定用户权限,修改
 # 1.权限列表
-@auth_bp.route("/auth_list", methods=["GET"])
+@auth_bp.route("/auth_list/", methods=["GET"])
 @login_required
 @need_permission(Permission.ADMIN)
 def auth_list():
@@ -57,7 +58,7 @@ def auth_list():
 
 
 # 3.删除权限
-@auth_bp.route("/auth_del", methods=["GET"])
+@auth_bp.route("/auth_del/", methods=["GET"])
 @login_required
 @need_permission(Permission.ADMIN)
 def auth_del():
@@ -75,7 +76,7 @@ def auth_del():
 
 
 # 4. 编辑权限
-@auth_bp.route('/auth_edit', methods=['GET', 'POST'])
+@auth_bp.route('/auth_edit/', methods=['GET', 'POST'])
 @login_required
 @need_permission(Permission.ADMIN)
 def auth_edit():
@@ -99,3 +100,66 @@ def auth_edit():
         flash('修改权限成功!', 'info')
         return redirect(url_for('auth.auth_edit', id=user.id, page=page))
     return render_template('auth/auth_edit.html', form=form, id=id, page=page)
+
+
+"""标签管理"""
+# 1.标签列表
+@auth_bp.route("/tag_list/", methods=["GET"])
+@login_required
+@need_permission(Permission.ADMIN)
+def tag_list():
+    page = int(request.args.get('page', 1))
+    tag_page = Tag.query.order_by(
+        Tag.addtime.desc()
+    ).paginate(page=page, per_page=3)
+    return render_template("auth/tag_list.html", tag_page=tag_page)
+
+
+# 2.删除标签
+@auth_bp.route("/tag_del/", methods=["GET"])
+@login_required
+@need_permission(Permission.ADMIN)
+def tag_del():
+    tag_id = request.args.get("tag_id")
+    tag = Tag.query.filter_by(id=tag_id).first_or_404()
+    db.session.delete(tag)
+    db.session.commit()
+    flash('删除标签成功!', 'warning')
+    return redirect(url_for("auth.tag_list", page=1))
+
+
+# 3. 编辑标签
+@auth_bp.route("/tag_add/", methods=['GET', 'POST'])
+@login_required
+@need_permission(Permission.ADMIN)
+def tag_add():
+    form = TagForm()
+    edit = request.args.get("edit")
+    tag_id = request.args.get("tag_id")
+
+    # GET请求 并且 是编辑状态 才获取 tag_id 进入编辑
+    if request.method == "GET" and edit:
+        tag = Tag.query.get_or_404(tag_id)
+        form.new_tag.data = tag.tag_name
+
+    if form.validate_on_submit():
+        # 判断 body 是否空
+        if not form.new_tag.data:
+            flash('内容不能为空', 'info')
+            return render_template('auth/tag_add.html', form=form, edit=edit, tag_id=tag_id)
+        if edit:
+            # 旧标签修改
+            tag = Tag.query.get_or_404(tag_id)
+            tag.tag_name = form.new_tag.data
+        else:
+            # 新标签入库
+            tag = Tag(
+                tag_name=form.new_tag.data,
+            )
+
+        db.session.add(tag)
+        db.session.commit()
+        flash('修改标签成功!', 'info')
+        return redirect(url_for('auth.tag_list'))
+
+    return render_template('auth/tag_add.html', form=form, edit=edit, tag_id=tag_id)

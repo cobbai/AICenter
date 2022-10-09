@@ -10,7 +10,7 @@ nlp_bp = Blueprint("nlp", __name__, url_prefix='/nlp')
 sim_model = BertSimilarity(os.getcwd() + "/engines/bert_similarity/text2vec_base_chinese")
 
 
-@nlp_bp.route('/dynamicform', methods=['GET', 'POST'])
+@nlp_bp.route('/dynamicform/', methods=['GET', 'POST'])
 def dynamicform():
 
     if request.method == "POST":

@@ -141,7 +141,7 @@
                 {{ form.csrf_token }}
             </p>
       </form>
-    <button><a href="{{ url_for('article.index') }}">首页</a></button>
+    <button><a href="{{ url_for('user.index') }}">首页</a></button>
     <button><a href="{{ url_for('article.article_add') }}">添加文章</a></button>
     {% if current_user.can(Permission.MODERATE) %}
         <button><a href="{{ url_for('article.comment_list') }}">管理评论</a></button>

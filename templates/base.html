@@ -100,15 +100,39 @@
           <div class="sidebar-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link menu-link active" href="{{ url_for('article.index') }}">
+                <a class="nav-link menu-link active" href="{{ url_for('user.index') }}">
                   <span data-feather="home"></span>
                   Dashboard {# <span class="sr-only">(current)</span> #}
                 </a>
               </li>
+
+            {#Article#}
+              <li class="nav-item">
+{#                <a class="nav-link menu-link" href="{{ url_for('article.article_list') }}">#}
+                <a class="nav-link menu-link" data-toggle="collapse" href="#article" aria-expanded="false" aria-controls="article">
+                  <span data-feather="shopping-cart"></span>
+                  Article
+                    <span class="menu-arrow" data-feather="chevron-right"></span>
+                </a>
+                <div class="collapse" id="article">
+                    <ul class="nav flex-column sub-menu">
+                        {% for tag in tags %}
+                            <li class="nav-item">
+                                <a class="nav-link sub-menu-link" href="{{ url_for('article.article_list', tag_id=tag.id) }}">
+                                    <span data-feather="chevron-down"></span>
+                                    {{ tag.tag_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+              </li>
+
+            {#NLP#}
               <li class="nav-item">
                 <a class="nav-link menu-link" data-toggle="collapse" href="#nlp" aria-expanded="false" aria-controls="nlp">
                   <span data-feather="file"></span>
-                  Orders
+                  NLP
                   <span class="menu-arrow" data-feather="chevron-right"></span>
                 </a>
                 <div class="collapse" id="nlp">
@@ -121,20 +145,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link sub-menu-link" href="{{ url_for('nlp.dynamicform') }}">
+                            <a class="nav-link sub-menu-link" href="#">
                                 <span data-feather="chevron-down"></span>
-                                nlp
+                                cv
                             </a>
                         </li>
                     </ul>
                 </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ url_for('article.article_list') }}">
-                  <span data-feather="shopping-cart"></span>
-                  Products
-                </a>
-              </li>
+
               <li class="nav-item">
                 <a class="nav-link menu-link" href="#">
                   <span data-feather="users"></span>
@@ -225,33 +244,43 @@
             $(function () {
                 {# 侧边栏折叠 active 切换 & 添加 html 标签 #}
                 {#console.log(location.pathname)#}
-                var pathlastname = location.pathname.split("/").slice(-2)[0]
-                {#console.log(pathlastname)#}
+                var pathlastname = location.pathname  {# 路由地址按"/"分格后的1索引名称 #}
+                {#console.log(pathlastname);#}
+                {#console.log(location.pathname);#}
                 // 无折叠的
                 $("#sidebarMenu").find("a.menu-link").each(function () {
+                    {#console.log('无折叠的');#}
+                    {#console.log($(this).attr("href"));#}
                     if ($(this).attr("href") === location.pathname) {
                         $(this).addClass("active");
+                        $(this).addClass("text-info");
                         {#var text = $(this).text()#}
                         var html = "<span class='sr-only'>(current)</span>";
                         $(this).append(html);
 
                     } else {
                         $(this).removeClass("active");
+                        $(this).removeClass("text-info");
                         $(this).find(".sr-only").remove();
                     }
                 });
                 // 有折叠的
                 $("#sidebarMenu").find("a.sub-menu-link").each(function () {
-                    var id = $(this).attr("href").split("/").slice(-2)[0];
-                    if( id === pathlastname) {
+                    var id = $(this).attr("href").split("/").slice(1)[0];
+                    var path = $(this).attr("href");
+                    {#console.log('有折叠的id: ' + id);#}
+                    {#console.log('有折叠的path: ' + path);#}
+                    if( path === pathlastname) {
                         {#console.log(id)#}
                         $("#" + id).collapse('show');
                         $(this).addClass("active");
+                        $(this).addClass("text-info");
                         var html = "<span class='sr-only'>(current)</span>";
                         $(this).append(html);
                     } else {
                         $("#" + id).collapse('hide');
                         $(this).removeClass("active");
+                        $(this).removeClass("text-info");
                         $(this).find(".sr-only").remove();
                     }
                 });

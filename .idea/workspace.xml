@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="version1">
+      <change afterPath="$PROJECT_DIR$/.idea/AICenter.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLinters/jshint.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/article/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/article/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/article/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/article/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/article/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/article/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nlp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nlp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article/article_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/article_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article/tag_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/tag_add.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/article/tag_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/tag_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/user_center.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_center.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/user/user_login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_login.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="65a02060-a676-44e8-9233-2fed57649920" />
+        <option name="url" value="git@github.com:cobbai/AICenter.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/app.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/apps/article/form.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/apps/article/model.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/apps/article/views.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/apps/temp/views.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/templates/article/article_page.html" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="27B2ZxsinYdgPyNnGHIspeUiD5f" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/cobb/Template_flask/AICenter/templates/auth",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Template_flask\cobb_AIweb\templates" />
+      <recent name="D:\Template_flask\cobb_AIweb\templates\email" />
+      <recent name="D:\Template_flask\cobb_AIweb\templates\user" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/auth" />
+      <recent name="D:\Template_flask\cobb_AIweb\templates\auth" />
+      <recent name="D:\Template_flask\cobb_AIweb\static\upload\article_image\7" />
+      <recent name="D:\Template_flask\cobb_AIweb\templates\" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main_optimization">
+    <configuration name="Iris" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AICenter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Template_python/2.sklearn" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Template_python/2.sklearn/Iris.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bertsimilarity (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cobb_AIweb" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/engines/bert_similarity" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/engines/bert_similarity/bertsimilarity.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="bertsimilarity" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cobb_AIweb" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/engines/bert_similarity" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="D:\Template_flask\cobb_AIweb\engines\bert_similarity\bertsimilarity.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="cobb_AIweb" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_optimization" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AICenter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Template_python/6.Recomdation" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$USER_HOME$/Template_python/6.Recomdation/main_optimization.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="cobb_AIweb" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apps/nlp" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/apps/nlp/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main_optimization" />
+        <item itemvalue="Python.Iris" />
+        <item itemvalue="Python.views" />
+        <item itemvalue="Python.bertsimilarity (1)" />
+        <item itemvalue="Python.bertsimilarity" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="" />
+      <created>1648779217958</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1648779217958</updated>
+      <workItem from="1648779219230" duration="21144000" />
+      <workItem from="1648869087251" duration="14422000" />
+      <workItem from="1648954023566" duration="605000" />
+      <workItem from="1650270274128" duration="86000" />
+      <workItem from="1650516167337" duration="348000" />
+      <workItem from="1650520330006" duration="43000" />
+      <workItem from="1650520491908" duration="2559000" />
+      <workItem from="1650788374966" duration="1354000" />
+      <workItem from="1650792428523" duration="749000" />
+      <workItem from="1650849306620" duration="1714000" />
+      <workItem from="1651111642749" duration="4528000" />
+      <workItem from="1651886658174" duration="6113000" />
+      <workItem from="1652060376596" duration="82918000" />
+      <workItem from="1652334649090" duration="15935000" />
+      <workItem from="1652404051380" duration="483000" />
+      <workItem from="1652404644784" duration="19823000" />
+      <workItem from="1652578682155" duration="453000" />
+      <workItem from="1652663438199" duration="6189000" />
+      <workItem from="1652670883286" duration="137000" />
+      <workItem from="1652671067802" duration="1164000" />
+      <workItem from="1652672992868" duration="62674000" />
+      <workItem from="1653009002052" duration="22071000" />
+      <workItem from="1653268158906" duration="11812000" />
+      <workItem from="1654589654505" duration="2708000" />
+      <workItem from="1654650944022" duration="25204000" />
+      <workItem from="1654823335785" duration="17902000" />
+      <workItem from="1655082873367" duration="27000" />
+      <workItem from="1655082940958" duration="7000" />
+      <workItem from="1655278096786" duration="6722000" />
+      <workItem from="1655341623609" duration="4260000" />
+      <workItem from="1658138374524" duration="86860000" />
+      <workItem from="1658571439595" duration="6444000" />
+      <workItem from="1658633246358" duration="10267000" />
+      <workItem from="1658717765971" duration="8785000" />
+      <workItem from="1658737312393" duration="19787000" />
+      <workItem from="1658997891600" duration="3991000" />
+      <workItem from="1660094896237" duration="12547000" />
+      <workItem from="1660385791779" duration="1969000" />
+      <workItem from="1660436077174" duration="20941000" />
+      <workItem from="1660525691459" duration="4390000" />
+      <workItem from="1660533238818" duration="12000" />
+      <workItem from="1660533639217" duration="60000" />
+      <workItem from="1660534113109" duration="179000" />
+      <workItem from="1660534412646" duration="99000" />
+      <workItem from="1660534556684" duration="16000" />
+      <workItem from="1660534646312" duration="1459000" />
+      <workItem from="1660549973600" duration="31189000" />
+      <workItem from="1660646700066" duration="513000" />
+      <workItem from="1660699439229" duration="63684000" />
+      <workItem from="1661130944639" duration="13099000" />
+      <workItem from="1661152637053" duration="26835000" />
+      <workItem from="1661250183627" duration="117000" />
+      <workItem from="1661306915492" duration="66330000" />
+      <workItem from="1661565087504" duration="5884000" />
+      <workItem from="1661735194781" duration="43901000" />
+      <workItem from="1662081935606" duration="1379000" />
+      <workItem from="1662098909859" duration="3414000" />
+      <workItem from="1662341452033" duration="24217000" />
+      <workItem from="1662607462072" duration="13386000" />
+      <workItem from="1662820898959" duration="2632000" />
+      <workItem from="1662857663166" duration="315000" />
+      <workItem from="1662858060158" duration="29000" />
+      <workItem from="1662858475148" duration="47000" />
+      <workItem from="1662961963279" duration="25000" />
+      <workItem from="1663031578648" duration="6000" />
+      <workItem from="1663059948569" duration="1613000" />
+      <workItem from="1663119287642" duration="58000" />
+      <workItem from="1663126035331" duration="2764000" />
+      <workItem from="1663139736640" duration="63000" />
+      <workItem from="1663139800211" duration="6012000" />
+      <workItem from="1663148895571" duration="1738000" />
+      <workItem from="1663151221023" duration="1760000" />
+      <workItem from="1663224048091" duration="7659000" />
+      <workItem from="1663467820926" duration="1251000" />
+      <workItem from="1663550373420" duration="3000" />
+      <workItem from="1663563435052" duration="17198000" />
+      <workItem from="1663728437384" duration="2701000" />
+      <workItem from="1663732170302" duration="1908000" />
+      <workItem from="1663832149150" duration="31000" />
+      <workItem from="1663903807260" duration="1679000" />
+      <workItem from="1663919239945" duration="41000" />
+      <workItem from="1663927638283" duration="112000" />
+      <workItem from="1663927855025" duration="823000" />
+      <workItem from="1664092959095" duration="17000" />
+      <workItem from="1664167315811" duration="42000" />
+      <workItem from="1664172806936" duration="9000" />
+      <workItem from="1664521661883" duration="3316000" />
+      <workItem from="1664845480546" duration="5662000" />
+      <workItem from="1665196777447" duration="82000" />
+      <workItem from="1665196903910" duration="12512000" />
+      <workItem from="1665279721363" duration="15614000" />
+    </task>
+    <task id="LOCAL-00001" summary="version1">
+      <created>1663140674609</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1663140674609</updated>
+    </task>
+    <task id="LOCAL-00002" summary="version1">
+      <created>1663141059654</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1663141059654</updated>
+    </task>
+    <task id="LOCAL-00003" summary="version1">
+      <created>1663143356707</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1663143356707</updated>
+    </task>
+    <task id="LOCAL-00004" summary="version1">
+      <created>1663144660178</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1663144660178</updated>
+    </task>
+    <task id="LOCAL-00005" summary="version1">
+      <created>1663149169955</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1663149169955</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="version1" />
+    <option name="LAST_COMMIT_MESSAGE" value="version1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$USER_HOME$/Template_python/1.scrapy/learn_京东商品爬取(senlenium).py</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/extends/__init__.py</url>
+          <line>2</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$USER_HOME$/Template_python/6.Recomdation/main_optimization.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/apps/auth/form.py</url>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/AICenter$main_optimization.coverage" NAME="main_optimization Coverage Results" MODIFIED="1663729864922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Template_python/6.Recomdation" />
+    <SUITE FILE_PATH="coverage/cobb_AIweb$main.coverage" NAME="main Coverage Results" MODIFIED="1661420234096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_similarity" />
+    <SUITE FILE_PATH="coverage/cobb_AIweb$views.coverage" NAME="views Coverage Results" MODIFIED="1661421165635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/apps/nlp" />
+    <SUITE FILE_PATH="coverage/cobb_AIweb$bertsimilarity__1_.coverage" NAME="bertsimilarity (1) Coverage Results" MODIFIED="1661486625898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_similarity" />
+    <SUITE FILE_PATH="coverage/AICenter$Iris.coverage" NAME="Iris Coverage Results" MODIFIED="1663668461772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Template_python/2.sklearn" />
+  </component>
+</project>

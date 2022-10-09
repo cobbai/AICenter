@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash  # 密码加盐
 from flask_login import login_required, logout_user, login_user, current_user
+
+from apps.article.form import BlogPostForm
 from apps.article.model import Blog
 from apps.user.model import *
 from apps.user.form import *
@@ -65,22 +67,22 @@ def before_request():
 
 
 # 未确认注册链接的用户限制在 user_unconfirmed.html
-@user_bp.route('/unconfirmed')
+@user_bp.route('/unconfirmed/')
 def user_unconfirmed():
     # print("current_user.is_anonymous", current_user.is_anonymous)
     # 未注册的匿名用户 or confirmed的用户 直接去首页
     if current_user.is_anonymous or current_user.confirmed:
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     return render_template('user/user_unconfirmed.html')
 
 
 # 0.初始化数据库
-@user_bp.route("/init_db")
+@user_bp.route("/init_db/")
 def init_db():
     Role.insert_roles()
     print("数据库初始化：")
     print(Role.query.all())
-    return redirect(url_for('article.index'))
+    return redirect(url_for('user.index'))
 
 
 # # 1.用户注册
@@ -103,36 +105,67 @@ def init_db():
 #         send_email(user.email, '确认注册邮件', 'email/confirm', user=user, token=token)
 #
 #         flash('已发送注册链接至您的邮箱，请前去确认!', 'warning')
-#         return redirect(url_for('article.index'))
+#         return redirect(url_for('user.index'))
 #     return render_template("user/user_add.html", form=form)
 
 
+# 0.博客首页
+@user_bp.route('/index/', methods=['GET', 'POST'])
+def index():
+    page = int(request.args.get('page', 1))
+    form = BlogPostForm()
+    # 匿名用户可以看，但不能添加博客
+    if not current_user.is_anonymous and form.validate_on_submit():
+        blog = Blog(
+            body=form.body.data,
+            user=current_user._get_current_object(),  # current_user只是用户对象的轻度包装。_get_current_object()返回数据库需要的真正用户对象
+        )
+        db.session.add(blog)
+        db.session.commit()
+        return redirect(url_for('user.index'))
+
+    # 显示关注人的博客
+    show_followed = False
+    if current_user.is_authenticated:
+        show_followed = bool(request.cookies.get('show_followed', ''))
+    if show_followed:
+        query = current_user.followed_blogs  # Model里的property方法
+    else:
+        query = Blog.query
+
+    blog_page = query.order_by(
+        Blog.timestamp.desc()
+    ).paginate(page=page, per_page=5)
+    blogs = blog_page.items  # 返回分页后的项目
+    return render_template("index.html", form=form, blogs=blogs, blog_page=blog_page)
+
+
 # 邮件确认链接生成
-@user_bp.route('/confirm/<token>')
+@user_bp.route('/confirm/<token>/')
 @login_required
 def user_confirm(token):
     if current_user.confirmed:
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     if current_user.confirm(token):
         db.session.commit()
         flash('您已注册成功！', 'info')
     else:
         flash('注册链接无效或过期', 'warning')
-    return redirect(url_for('article.index'))
+    return redirect(url_for('user.index'))
 
 
 # 重新发送确认链接
-@user_bp.route('/confirm')
+@user_bp.route('/confirm/')
 @login_required
 def user_resend_confirmation():
     token = current_user.generate_confirmation_token()
     send_email(current_user.email, '确认注册邮件', 'email/confirm', user=current_user, token=token)
     flash('重新向您的邮箱发送了注册链接')
-    return redirect(url_for('article.index'))
+    return redirect(url_for('user.index'))
 
 
 # 2.用户登录
-@user_bp.route('/login', methods=['GET', 'POST'])
+@user_bp.route('/login/', methods=['GET', 'POST'])
 def user_login():
     loginform = LoginForm()
     registerform = RegistForm()
@@ -179,20 +212,20 @@ def user_login():
         login_user(user)
         flash('已发送注册链接至您的邮箱，请前去确认!', 'warning')
         #  未验证邮箱的用户会先出发钩子函数
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     return render_template("user/user_login.html", loginform=loginform, registerform=registerform)
 
 
 # 3.用户登出
-@user_bp.route('/logout')
+@user_bp.route('/logout/')
 @login_required
 def user_logout():
     logout_user()  # flask_login
-    return redirect(url_for('article.index'))
+    return redirect(url_for('user.index'))
 
 
 # 4.用户中心
-@user_bp.route('/center', methods=['GET', 'POST'])
+@user_bp.route('/center/', methods=['GET', 'POST'])
 @login_required
 @need_permission(Permission.WRITE)
 def user_center():
@@ -245,7 +278,7 @@ def user_center():
 
 
 # 5.修改密码
-@user_bp.route("/pwd", methods=["GET", "POST"])
+@user_bp.route("/pwd/", methods=["GET", "POST"])
 @login_required
 def user_pwd():
     form = PwdForm()
@@ -263,11 +296,11 @@ def user_pwd():
 
 
 # 6.重设密码
-@user_bp.route("/reset_pwd", methods=["GET", "POST"])
+@user_bp.route("/reset_pwd/", methods=["GET", "POST"])
 def user_reset_pwd_request():
     # 匿名用户才进重设密码
     if not current_user.is_anonymous:
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     form = PasswordResetRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
@@ -281,11 +314,11 @@ def user_reset_pwd_request():
     return render_template('user/user_reset_pwd.html', form=form)
 
 
-@user_bp.route("/reset_pwd/<token>", methods=["GET", "POST"])
+@user_bp.route("/reset_pwd/<token>/", methods=["GET", "POST"])
 def user_reset_pwd(token):
     # 匿名用户才进重设密码
     if not current_user.is_anonymous:
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     form = PasswordResetForm()
     if form.validate_on_submit():
         # 因为现在是匿名用户，所以不能用 current_user 获取 User 函数
@@ -295,12 +328,12 @@ def user_reset_pwd(token):
             flash('重设密码成功')
             return redirect(url_for('user.user_login'))
         else:
-            return redirect(url_for('article.index'))
+            return redirect(url_for('user.index'))
     return render_template('user/user_reset_pwd.html', form=form)
 
 
 # 7.重设邮件
-@user_bp.route("/change_email", methods=["GET", "POST"])
+@user_bp.route("/change_email/", methods=["GET", "POST"])
 @login_required
 def user_change_email_request():
     form = ChangeEmailForm()
@@ -310,13 +343,13 @@ def user_change_email_request():
             token = current_user.generate_email_change_token(new_email)
             send_email(new_email, '修改邮箱', '/email/change_email', user=current_user, token=token)
             flash('修改邮箱链接已发送至您的新邮箱')
-            return redirect(url_for('article.index'))
+            return redirect(url_for('user.index'))
         else:
             flash('无效的邮箱')
     return render_template("user/user_reset_pwd.html", form=form)
 
 
-@user_bp.route("/change_email/<token>")
+@user_bp.route("/change_email/<token>/")
 @login_required
 def user_change_email(token):
     if current_user.change_email(token):
@@ -324,25 +357,25 @@ def user_change_email(token):
         flash('邮箱已更新')
     else:
         flash('更新邮箱请求无效')
-    return redirect(url_for('article.index'))
+    return redirect(url_for('user.index'))
 
 
 # 7.用户资料
-@user_bp.route("/user_detail/<uid>", methods=["GET", "POST"])
+@user_bp.route("/user_detail/<uid>/", methods=["GET", "POST"])
 def user_detail(uid):
     user = User.query.get_or_404(uid)
     return render_template("user/user_detail.html", user=user)
 
 
 # 8.关注用户
-@user_bp.route("/follow/<uid>", methods=["GET", "POST"])
+@user_bp.route("/follow/<uid>/", methods=["GET", "POST"])
 @login_required
 @need_permission(Permission.FOLLOW)
 def follow(uid):
     user = User.query.filter_by(id=uid).first()
     if not user:
         flash('无效用户!', 'info')
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     if current_user.is_following(user):
         flash('您已经关注此用户!', 'info')
         return redirect(url_for('user.user_detail', uid=uid))
@@ -352,14 +385,14 @@ def follow(uid):
 
 
 # 9.取消关注
-@user_bp.route("/unfollow/<uid>", methods=["GET", "POST"])
+@user_bp.route("/unfollow/<uid>/", methods=["GET", "POST"])
 @login_required
 @need_permission(Permission.FOLLOW)
 def unfollow(uid):
     user = User.query.filter_by(id=uid).first()
     if not user:
         flash('无效用户!', 'info')
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     if not current_user.is_following(user):
         flash('您未关注此用户!', 'info')
         return redirect(url_for('user.user_detail', uid=uid))
@@ -369,12 +402,12 @@ def unfollow(uid):
 
 
 # 10.关注了
-@user_bp.route("/followers/<uid>", methods=["GET", "POST"])
+@user_bp.route("/followers/<uid>/", methods=["GET", "POST"])
 def followers(uid):
     user = User.query.filter_by(id=uid).first()
     if not user:
         flash('无效用户!', 'info')
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     page = request.args.get('page', 1)
     pagination = user.followers.paginate(page, per_page=5)
     # pagination.items 取出每页的所有项目
@@ -388,12 +421,12 @@ def followers(uid):
 
 
 # 10.被关注
-@user_bp.route("/followed_by/<uid>", methods=["GET", "POST"])
+@user_bp.route("/followed_by/<uid>/", methods=["GET", "POST"])
 def followed_by(uid):
     user = User.query.filter_by(id=uid).first()
     if not user:
         flash('无效用户!', 'info')
-        return redirect(url_for('article.index'))
+        return redirect(url_for('user.index'))
     page = request.args.get('page', 1)
     pagination = user.followed.paginate(page, per_page=5)
     # pagination.items 取出每页的所有项目

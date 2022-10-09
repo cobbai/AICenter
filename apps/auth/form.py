@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, SelectField, BooleanField
 from wtforms.validators import DataRequired, Length, ValidationError, EqualTo, Email, Regexp
-from apps.auth.model import Role
+from apps.auth.model import Role, Tag
 
 
 '''权限表单'''
@@ -17,6 +17,21 @@ class AuthForm(FlaskForm):
         super(AuthForm, self).__init__(*args, **kwargs)
         self.role.choices = [(role.id, role.role_name) for role in Role.query.order_by(Role.permissions.asc()).all()]
         self.user = user
+
+
+"""文章标签表单"""
+class TagForm(FlaskForm):
+    confirmed = BooleanField('提交')
+    new_tag = StringField("新标签名", validators=[DataRequired()])
+    tag = SelectField('现有标签', coerce=int)
+    submit = SubmitField(
+        label='提交',
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(TagForm, self).__init__(*args, **kwargs)
+        self.tag.choices = [(tag.id, tag.tag_name) for tag in Tag.query.order_by(Tag.addtime.asc()).all()]
+
 
 # '''角色表单'''
 # class RoleForm(FlaskForm):
