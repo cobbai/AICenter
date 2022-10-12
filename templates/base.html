@@ -253,14 +253,14 @@
                     {#console.log($(this).attr("href"));#}
                     if ($(this).attr("href") === location.pathname) {
                         $(this).addClass("active");
-                        $(this).addClass("text-info");
+                        $(this).addClass("text-success");
                         {#var text = $(this).text()#}
                         var html = "<span class='sr-only'>(current)</span>";
                         $(this).append(html);
 
                     } else {
                         $(this).removeClass("active");
-                        $(this).removeClass("text-info");
+                        $(this).removeClass("text-success");
                         $(this).find(".sr-only").remove();
                     }
                 });
@@ -274,13 +274,13 @@
                         {#console.log(id)#}
                         $("#" + id).collapse('show');
                         $(this).addClass("active");
-                        $(this).addClass("text-info");
+                        $(this).addClass("text-success");
                         var html = "<span class='sr-only'>(current)</span>";
                         $(this).append(html);
                     } else {
                         $("#" + id).collapse('hide');
                         $(this).removeClass("active");
-                        $(this).removeClass("text-info");
+                        $(this).removeClass("text-success");
                         $(this).find(".sr-only").remove();
                     }
                 });

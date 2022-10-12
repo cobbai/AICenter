@@ -3,6 +3,7 @@
 {% block title %}文章列表{% endblock %}
 
 {% block styles %}
+    {{ super() }}
     <style>
 
     </style>
@@ -10,10 +11,6 @@
 {% endblock %}
 
 {% block main %}
-
-    <h1>算法文章</h1>
-    <p>当前版本仅供管理员添加删除修改</p>
-    <p>当前版本仅供管理员添加删除修改</p>
 
     {% with msgs = get_flashed_messages(with_categories=True) %}
       {% if msgs %}
@@ -27,33 +24,39 @@
 
 
     <div id="article_list">
-        <h3 class="text-info">role_list</h3>
+        <h3>{{ articles[0].tag.tag_name }}</h3>
         <table>
-            <tr>
-                <th>编号</th>
-                <th>文章名</th>
-                <th>标签</th>
-                <th>星级</th>
-                <th>阅读量</th>
-                <th>作者</th>
-                <th>评论数量</th>
-                <th>上映时间</th>
-                <th>操作事项</th>
-            </tr>
+{#            <tr>#}
+{#                <th>编号</th>#}
+{#                <th>文章名</th>#}
+{#                <th>标签</th>#}
+{#                <th>星级</th>#}
+{#                <th>阅读量</th>#}
+{#                <th>作者</th>#}
+{#                <th>评论数量</th>#}
+{#                <th>上映时间</th>#}
+{#                <th>操作事项</th>#}
+{#            </tr>#}
             {% for v in articles %}
             <tr>
-                <td>{{ v.id }}</td>
-                <td><a href="{{ url_for("article.article_page", article_id=v.id) }}">{{ v.title }}</a></td>
-                <td>{{ v.tag.tag_name }}</td>
-                <td>{{ v.star }}</td>
-                <td>{{ v.read_num }}</td>
-                <td>{{ v.user.name }}</td>
-                <td>{{ v.comment_num }}</td>
-                <td>{{ v.addtime }}</td>
+{#                <td>{{ v.id }}</td>#}
+                <td>
+                    <a class="text-success" href="{{ url_for("article.article_page", article_id=v.id) }}">{{ v.title }}</a>
+                </td>
+{#                <td>{{ v.tag.tag_name }}</td>#}
+{#                <td>{{ v.star }}</td>#}
+{#                <td>{{ v.read_num }}</td>#}
+{#                <td>{{ v.user.name }}</td>#}
+{#                <td>{{ v.comment_num }}</td>#}
+{#                <td>{{ v.addtime }}</td>#}
+
+                {# 管理员能编辑修改 #}
+                {% if current_user.can(Permission.ADMIN) %}
                 <td>
                     <a href="{{ url_for('article.article_add', article_id=v.id, edit=1) }}">编辑</a>
                     <a href="{{ url_for('article.article_del', article_id=v.id, page=v.tag_id) }}">删除</a>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>

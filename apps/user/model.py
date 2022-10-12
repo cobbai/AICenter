@@ -24,7 +24,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)  # 编号
     name = db.Column(db.String(64), unique=True)  # 用户名
-    pwd = db.Column(db.String(128))  # 密码
+    pwd = db.Column(db.Text())  # 密码
     email = db.Column(db.String(64), unique=True)  # 邮箱
     # phone = db.Column(db.String(11), unique=True)  # 手机号
     info = db.Column(db.Text())  # 个性简介

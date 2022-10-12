@@ -55,14 +55,33 @@
 {% endblock %}
 
 {% block main %}
+    <h1>{{ article.title }}</h1>  {# 标题 #}
 
-   <div>{{ article.title }}</div>  {# 标题 #}
-   <div>{{ article.user.name }}</div>  {# 作者 #}
-   <div>{{ article.star }}</div>  {# 星级 #}
-   <div>{{ article.read_num }}</div>  {# 阅读量 #}
-   <div>{{ article.comment_num }}</div>  {# 评论量 #}
-   <div>{{ article.addtime }}</div>  {# 时间 #}
-   <div>{{ article.tag.tag_name }}</div>  {# 分类 #}
+    <p>
+        <strong>作者：</strong><a class="text-success" href="#">{{ article.user.name }}</a><br>
+        <strong>发布时间：</strong>{{ article.addtime }}<br>
+        <strong>星级：</strong>{{ article.star }}
+        <strong>浏览量：</strong>{{ article.read_num }}
+        <strong>评论量：</strong>{{ article.comment_num }}
+    </p>
+
+    <p>
+        {# 固定地址 #}
+        <a href="{{ url_for('article.article_page', article_id=article.id) }}">
+            <strong class="text-success">文章地址</strong>
+        </a>
+
+        <span style="padding-left: 1rem; padding-right: 1rem">•</span>
+
+        {# 自己或管理员可见 #}
+        {% if article.user == current_user or current_user.can(Permission.ADMIN)%}
+            <a href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
+                <strong class="text-success">编辑</strong>
+            </a>
+        {% endif %}
+    </p>
+
+    <hr>
     {# 内容 #}
    <div>
 {#        {%  if article.body_html %}#}
@@ -72,22 +91,6 @@
 {#        {% endif %}#}
         {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
    </div>
-
-    {# 固定地址 #}
-    <div>
-        <a href="{{ url_for('article.article_page', article_id=article.id) }}">
-            <span>文章固定地址</span>
-        </a>
-    </div>
-
-    {# 编辑 #}
-    <div>
-        {% if article.user == current_user or current_user.can(Permission.ADMIN)%}
-            <a href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
-                <span>编辑</span>
-            </a>
-        {% endif %}
-    </div>
 
     {# 评论 #}
     <div>
