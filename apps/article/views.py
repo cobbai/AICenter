@@ -28,8 +28,8 @@ def need_permission(perm):
 
 
 # 1.文章页
-@article_bp.route('/article_page/<int:article_id>/', methods=['GET', 'POST'])
-def article_page(article_id):
+@article_bp.route('/<tag_name_en>/<int:article_id>/', methods=['GET', 'POST'])
+def article_page(tag_name_en, article_id):
     article = Article.query.get_or_404(article_id)
     # 评论
     form = CommentForm()
@@ -40,7 +40,7 @@ def article_page(article_id):
         db.session.add(comment)
         db.session.commit()
         flash('评论成功')
-        return redirect(url_for('article.article_page', article_id=article_id))
+        return redirect(url_for('article.article_page', tag_name_en=tag_name_en, article_id=article_id))
     page = int(request.args.get('page', 1))
     pagination = article.comments.order_by(
         Comment.addtime.desc()
@@ -117,19 +117,22 @@ def article_add():
         # )
         # db.session.add(oplog)
         # db.session.commit()
-        return redirect(url_for('article.article_page', article_id=int(article.id)))
+        tag = Tag.query.filter_by(id=form.tag.data).first()
+        return redirect(url_for('article.article_page', tag_name_en=tag.tag_name_en, article_id=int(article.id)))
 
     return render_template('article/article_add.html', form=form, edit=edit, article_id=article_id)
 
 
 # 3.文章列表
-@article_bp.route('/article_list/<int:tag_id>', methods=['GET', 'POST'])
+@article_bp.route('/<tag_name_en>/', methods=['GET', 'POST'])
 @login_required
 @need_permission(Permission.WRITE)
-def article_list(tag_id):
-    # 不写join条件将默认使用外键关联
-    articles = Article.query.filter_by(
-        tag_id=tag_id
+def article_list(tag_name_en):
+    # # join关联，先 TAG表限定英文标签名
+    # # 再 用限定后的 Tag.id 关联 Article.tag_id
+    articles = Article.query.join(Tag).filter(
+        Tag.tag_name_en == tag_name_en,
+        Article.tag_id == Tag.id
     ).all()
 
     return render_template("article/article_list.html", articles=articles)
@@ -141,7 +144,7 @@ def article_list(tag_id):
 @need_permission(Permission.WRITE)
 def article_del():
     article_id = request.args.get("article_id")
-    tag_id = int(request.args.get('tag_id', 1))
+    tag_name_en = request.args.get("tag_name_en")
 
     article = Article.query.filter_by(id=article_id).first_or_404()
     # 删除文章中的图片
@@ -165,7 +168,7 @@ def article_del():
     # )
     # db.session.add(oplog)
     # db.session.commit()
-    return redirect(url_for("article.article_list", tag_id=tag_id))
+    return redirect(url_for("article.article_list", tag_name_en=tag_name_en))
 
 
 # 5.图片上传

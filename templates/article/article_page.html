@@ -54,6 +54,17 @@
     <link type="text/css" href="{{ url_for('static', filename='extends/prism/prism.css') }}" rel="stylesheet">
 {% endblock %}
 
+{% block breadcrumb %}
+    {% if article %}
+        <div class="border-bottom text-left p-3">
+            »
+            <a class="text-success" href="{{ url_for('article.article_list', tag_name_en=article.tag.tag_name_en) }}">{{ article.tag.tag_name }}</a>
+            /
+            <a>{{ article.title }}</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
 {% block main %}
     <h1>{{ article.title }}</h1>  {# 标题 #}
 
@@ -67,7 +78,7 @@
 
     <p>
         {# 固定地址 #}
-        <a href="{{ url_for('article.article_page', article_id=article.id) }}">
+        <a href="{{ url_for('article.article_page', tag_name_en=article.tag.tag_name_en, article_id=article.id) }}">
             <strong class="text-success">文章地址</strong>
         </a>
 
@@ -104,7 +115,7 @@
         {% include 'ui/_comments.html' %}
         {# #comments url片段#用来标记滚动条起始位置 #}
         {# 使得翻页时候能直接定位再评论位置 #}
-        {{ pg.page(pagination, "article.article_page", fragment='#comments', article_id=article.id) }}
+        {{ pg.page(pagination, "article.article_page", fragment='#comments', article_id=article.id, tag_name_en=article.tag.tag_name_en) }}
 
     </div>
 {% endblock %}

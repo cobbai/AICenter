@@ -2,13 +2,6 @@
 
 {% block title %}文章列表{% endblock %}
 
-{% block styles %}
-    {{ super() }}
-    <style>
-
-    </style>
-
-{% endblock %}
 
 {% block main %}
 
@@ -24,7 +17,9 @@
 
 
     <div id="article_list">
-        <h3>{{ articles[0].tag.tag_name }}</h3>
+        {% if articles %}
+            <h3>{{ articles[0].tag.tag_name }}</h3>
+        {% endif %}
         <table>
 {#            <tr>#}
 {#                <th>编号</th>#}
@@ -41,7 +36,7 @@
             <tr>
 {#                <td>{{ v.id }}</td>#}
                 <td>
-                    <a class="text-success" href="{{ url_for("article.article_page", article_id=v.id) }}">{{ v.title }}</a>
+                    <a class="text-success" href="{{ url_for("article.article_page", tag_name_en=v.tag.tag_name_en, article_id=v.id) }}">{{ v.title }}</a>
                 </td>
 {#                <td>{{ v.tag.tag_name }}</td>#}
 {#                <td>{{ v.star }}</td>#}
@@ -54,7 +49,7 @@
                 {% if current_user.can(Permission.ADMIN) %}
                 <td>
                     <a href="{{ url_for('article.article_add', article_id=v.id, edit=1) }}">编辑</a>
-                    <a href="{{ url_for('article.article_del', article_id=v.id, page=v.tag_id) }}">删除</a>
+                    <a href="{{ url_for('article.article_del', article_id=v.id, tag_name_en=v.tag.tag_name_en) }}">删除</a>
                 </td>
                 {% endif %}
             </tr>

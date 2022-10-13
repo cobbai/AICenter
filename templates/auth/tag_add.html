@@ -25,6 +25,11 @@
                     <small class="error">{{ message }}</small><br>
             {% endfor %}
 
+        <p>{{ form.new_tag_en.label }}{{ form.new_tag_en }}</p>
+            {% for message in form.new_tag_en.errors %}
+                    <small class="error">{{ message }}</small><br>
+            {% endfor %}
+
         <p>{{ form.tag.label }}{{ form.tag }}</p>
             {% for message in form.tag.errors %}
                     <small class="error">{{ message }}</small><br>

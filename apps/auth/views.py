@@ -151,10 +151,12 @@ def tag_add():
             # 旧标签修改
             tag = Tag.query.get_or_404(tag_id)
             tag.tag_name = form.new_tag.data
+            tag.tag_name_en = form.new_tag_en.data
         else:
             # 新标签入库
             tag = Tag(
                 tag_name=form.new_tag.data,
+                tag_name_en=form.new_tag_en.data,
             )
 
         db.session.add(tag)

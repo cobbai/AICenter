@@ -23,6 +23,7 @@ class AuthForm(FlaskForm):
 class TagForm(FlaskForm):
     confirmed = BooleanField('提交')
     new_tag = StringField("新标签名", validators=[DataRequired()])
+    new_tag_en = StringField("新标签名（英文）", validators=[DataRequired()])
     tag = SelectField('现有标签', coerce=int)
     submit = SubmitField(
         label='提交',
