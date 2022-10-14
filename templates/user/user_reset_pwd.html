@@ -3,33 +3,9 @@
 
 {% block title %}重设密码{% endblock %}
 
-{% block styles %}
-    {{ super() }}
-    <style>
-        .info{
-            color: deepskyblue;
-        }
-        .warning{
-            color: orange;
-        }
-        .error{
-            color: red;
-        }
-    </style>
-{% endblock %}
-
 {% block main %}
 
     <div id="role">
-        {% with msgs = get_flashed_messages(with_categories=True) %}
-              {% if msgs %}
-                  <ul>
-                      {% for category, msg in msgs %}
-                          <li class="{{ category }}" >{{ msg }}</li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-        {% endwith %}
 
         {{ wtf.quick_form(form) }}
 

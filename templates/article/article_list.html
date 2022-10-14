@@ -5,17 +5,6 @@
 
 {% block main %}
 
-    {% with msgs = get_flashed_messages(with_categories=True) %}
-      {% if msgs %}
-          <ul>
-              {% for category, msg in msgs %}
-                  <li class="{{ category }}" >{{ msg }}</li>
-              {% endfor %}
-          </ul>
-      {% endif %}
-    {% endwith %}
-
-
     <div id="article_list">
         {% if articles %}
             <h3>{{ articles[0].tag.tag_name }}</h3>

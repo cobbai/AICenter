@@ -2,36 +2,11 @@
 
 {% block title %}修改密码{% endblock %}
 
-{% block styles %}
-    {{ super() }}
-    <style>
-        .info{
-            color: deepskyblue;
-        }
-        .warning{
-            color: orange;
-        }
-        .error{
-            color: red;
-        }
-    </style>
-{% endblock %}
-
 {% block main %}
 
     <div id="role">
 
         <form action="{{ url_for('user.user_pwd') }}" method="post">
-
-        {% with msgs = get_flashed_messages(with_categories=True) %}
-              {% if msgs %}
-                  <ul>
-                      {% for category, msg in msgs %}
-                          <li class="{{ category }}" >{{ msg }}</li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-        {% endwith %}
 
         <p>{{ form.old_pwd.label }}{{ form.old_pwd }}</p>
             {% for message in form.old_pwd.errors %}

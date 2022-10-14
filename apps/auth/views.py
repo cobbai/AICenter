@@ -98,7 +98,7 @@ def auth_edit():
         db.session.add(user)
         db.session.commit()
         flash('修改权限成功!', 'info')
-        return redirect(url_for('auth.auth_edit', id=user.id, page=page))
+        return redirect(url_for('auth.auth_list', page=page))
     return render_template('auth/auth_edit.html', form=form, id=id, page=page)
 
 
@@ -111,7 +111,7 @@ def tag_list():
     page = int(request.args.get('page', 1))
     tag_page = Tag.query.order_by(
         Tag.addtime.desc()
-    ).paginate(page=page, per_page=3)
+    ).paginate(page=page, per_page=5)
     return render_template("auth/tag_list.html", tag_page=tag_page)
 
 
@@ -141,6 +141,7 @@ def tag_add():
     if request.method == "GET" and edit:
         tag = Tag.query.get_or_404(tag_id)
         form.new_tag.data = tag.tag_name
+        form.new_tag_en.data = tag.tag_name_en
 
     if form.validate_on_submit():
         # 判断 body 是否空

@@ -6,16 +6,6 @@
 {% block styles %}
     {{ super() }}
     <style>
-        .info{
-            color: deepskyblue;
-        }
-        .warning{
-            color: orange;
-        }
-        .error{
-            color: red;
-        }
-
         ul.comments {
             list-style-type: none;
             padding: 0px;
@@ -66,6 +56,16 @@
 {% endblock %}
 
 {% block main %}
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+      {% if msgs %}
+          <ul id="flashToasts" hidden>
+              {% for category, msg in msgs %}
+                  <li class="{{ category }}" >{{ msg }}</li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+    {% endwith %}
+
     <h1>{{ article.title }}</h1>  {# 标题 #}
 
     <p>
@@ -78,16 +78,17 @@
 
     <p>
         {# 固定地址 #}
-        <a href="{{ url_for('article.article_page', tag_name_en=article.tag.tag_name_en, article_id=article.id) }}">
-            <strong class="text-success">文章地址</strong>
+
+        <a class="badge badge-light" href="{{ url_for('article.article_page', tag_name_en=article.tag.tag_name_en, article_id=article.id) }}">
+            文章地址
         </a>
 
         <span style="padding-left: 1rem; padding-right: 1rem">•</span>
 
         {# 自己或管理员可见 #}
         {% if article.user == current_user or current_user.can(Permission.ADMIN)%}
-            <a href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
-                <strong class="text-success">编辑</strong>
+            <a class="badge badge-info" href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
+                <strong>编辑</strong>
             </a>
         {% endif %}
     </p>
@@ -116,8 +117,8 @@
         {# #comments url片段#用来标记滚动条起始位置 #}
         {# 使得翻页时候能直接定位再评论位置 #}
         {{ pg.page(pagination, "article.article_page", fragment='#comments', article_id=article.id, tag_name_en=article.tag.tag_name_en) }}
-
     </div>
+
 {% endblock %}
 
 

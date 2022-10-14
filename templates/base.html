@@ -54,6 +54,17 @@
                 }
             }
 
+            {# flash 消息等级 #}
+            .info{
+                color: deepskyblue;
+            }
+            .warning{
+                color: orange;
+            }
+            .error{
+                color: red;
+            }
+
         </style>
     {% endblock %}
 
@@ -185,6 +196,8 @@
               </li>
             </ul>
 
+            <hr>
+
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Saved reports</span>
               <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
@@ -204,6 +217,26 @@
                 {# TODO 注册日期对不上 #}
                 <p>The local date and time is {{ moment(current_time).format('MMMM Do YYYY, h:mm:ss a') }}.</p>
                 <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+            </div>
+
+            <hr>
+
+            {# Toasts #}
+            {#
+            data-delay="10000": 延时关闭
+            data-autohide="false": 取消自动关闭
+            role="alert" aria-live="assertive": 告警
+            role="status" aria-live="polite": 信息
+            #}
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+              <div class="toast-header bg-info text-white">
+                <strong class="mr-auto">信息</strong>
+{#                <small>11 mins ago</small>#}
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="toast-body"></div>
             </div>
 
           </div>
@@ -247,6 +280,7 @@
 
         <script>
             $(function () {
+
                 {# 侧边栏折叠 active 切换 & 添加 html 标签 #}
                 // 无折叠的
                 $("#sidebarMenu").find("a.menu-link").each(function () {
@@ -288,6 +322,32 @@
                         $(this).find(".sr-only").remove();
                     }
                 });
+
+                {# Toasts + Flash闪现 #}
+                var flashToasts = $('#flashToasts');
+                {#console.log(flashToasts.length);#}
+                if (flashToasts.length) {
+                    flashToasts.find('li').each(function () {
+                        var liName = $(this).attr('class');
+                        var liContent = $(this).text();
+                        var toastwarning = $('.toast');
+                        if (liName === 'warning') {
+                            toastwarning.find('div.toast-header').removeClass('bg-info').addClass('bg-warning');
+                            toastwarning.find('strong.mr-auto').text(liName);
+                            toastwarning.find('div.toast-body').text(liContent);
+                            toastwarning.toast('show');
+                        } else if (liName === 'error') {
+                            toastwarning.find('div.toast-header').removeClass('bg-info').addClass('bg-danger');
+                            toastwarning.find('strong.mr-auto').text(liName);
+                            toastwarning.find('div.toast-body').text(liContent);
+                            toastwarning.toast('show');
+                        } else {
+                            toastwarning.find('strong.mr-auto').text(liName);
+                            toastwarning.find('div.toast-body').text(liContent);
+                            toastwarning.toast('show');
+                        }
+                    });
+                }
             });
 
             // 给 sidebarMenu 添加绑定事件：on

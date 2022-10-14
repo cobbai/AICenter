@@ -290,7 +290,7 @@ def user_pwd():
         user.pwd = generate_password_hash(form.new_pwd.data)
         db.session.add(user)
         db.session.commit()
-        flash('修改密码成功!', 'info')
+        flash('修改密码成功!请重新登录', 'info')
         return redirect(url_for('user.user_logout'))
     return render_template("user/user_pwd.html", form=form)
 

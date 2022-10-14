@@ -2,36 +2,12 @@
 
 {% block title %}权限修改{% endblock %}
 
-{% block styles %}
-    {{ super() }}
-    <style>
-        .info{
-            color: deepskyblue;
-        }
-        .warning{
-            color: orange;
-        }
-        .error{
-            color: red;
-        }
-    </style>
-{% endblock %}
 
 {% block main %}
 
     <div id="auth">
         <b>{{ page_num }}</b>
         <form action="{{ url_for('auth.auth_edit', id=id, page=page) }}" method="post">
-
-        {% with msgs = get_flashed_messages(with_categories=True) %}
-              {% if msgs %}
-                  <ul>
-                      {% for category, msg in msgs %}
-                          <li class="{{ category }}" >{{ msg }}</li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-        {% endwith %}
 
         <p>{{ form.confirmed.label }}{{ form.confirmed }}</p>
         {% for message in form.confirmed.errors %}

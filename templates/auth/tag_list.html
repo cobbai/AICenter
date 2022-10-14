@@ -3,34 +3,20 @@
 
 {% block title %}文章标签列表{% endblock %}
 
-{% block styles %}
-    {{ super() }}
-    <style>
-        .info{
-            color: deepskyblue;
-        }
-        .warning{
-            color: orange;
-        }
-        .error{
-            color: red;
-        }
-    </style>
-{% endblock %}
 
 {% block main %}
+    {% with msgs = get_flashed_messages(with_categories=True) %}
+      {% if msgs %}
+          <ul id="flashToasts" hidden>
+              {% for category, msg in msgs %}
+                  <li class="{{ category }}" >{{ msg }}</li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+    {% endwith %}
 
     <div>
-        <h3 style="color:red">role_list</h3>
-            {% with msgs = get_flashed_messages(with_categories=True) %}
-              {% if msgs %}
-                  <ul>
-                      {% for category, msg in msgs %}
-                          <li class="{{ category }}" >{{ msg }}</li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-            {% endwith %}
+        <a href="{{ url_for('auth.tag_add') }}">新增标签</a>
         <table>
             <tr>
                 <th>编号</th>

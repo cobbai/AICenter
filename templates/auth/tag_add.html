@@ -10,16 +10,6 @@
 
         <form action="{% if edit %} {{ url_for('auth.tag_add', tag_id=tag_id, edit=edit) }} {% else %} {{ url_for('auth.tag_add') }} {% endif %}" method="post" enctype="multipart/form-data">
 
-        {% with msgs = get_flashed_messages(with_categories=True) %}
-              {% if msgs %}
-                  <ul>
-                      {% for category, msg in msgs %}
-                          <li class="{{ category }}" >{{ msg }}</li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-        {% endwith %}
-
         <p>{{ form.new_tag.label }}{{ form.new_tag }}</p>
             {% for message in form.new_tag.errors %}
                     <small class="error">{{ message }}</small><br>

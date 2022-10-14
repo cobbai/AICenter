@@ -108,7 +108,7 @@ def article_add():
                 )
                 db.session.add(articleimage)
         db.session.commit()
-        flash('编辑新文章成功!', 'info')
+        flash('编辑成功!', '消息')
         # TODO: 操作日志
         # oplog = Oplog(
         #     admin_id=session['admin_id'],
@@ -134,7 +134,8 @@ def article_list(tag_name_en):
         Tag.tag_name_en == tag_name_en,
         Article.tag_id == Tag.id
     ).all()
-
+    # flash('测试一下闪现!', 'warning')
+    flash('测试一下闪现! info', 'info')
     return render_template("article/article_list.html", articles=articles)
 
 
