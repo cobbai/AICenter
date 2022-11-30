@@ -146,8 +146,10 @@
     </div>
 
     {% if blogs %}
-        <b>您发布的Blog有：</b>
-        {% include 'ui/_blogs.html' %}
+        <div>
+            <b>您发布的Blog有：</b>
+            {% include 'ui/_blogs.html' %}
+        </div>
     {% endif %}
 
 {% endblock %}

@@ -3,24 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="version1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/article/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/article/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/auth/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/article_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/article_add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/article_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/article_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/temp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/temp/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/article/article_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/article_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/comment_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/comment_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/auth/auth_edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/auth_edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/auth/auth_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/auth_list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/auth/tag_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/tag_add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/auth/tag_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/auth/tag_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/nlp/dynamicform.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/dynamicform.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/followers.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/followers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/user/user_center.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_center.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/user_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/user_pwd.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_pwd.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/user_reset_pwd.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_reset_pwd.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/user/user_unconfirmed.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/user/user_unconfirmed.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +20,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -89,17 +77,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cobb/Template_flask/AICenter/templates/auth&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/cobb/Template_flask/AICenter/templates/auth",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Template_flask\cobb_AIweb\templates" />
@@ -357,7 +346,19 @@
       <workItem from="1665279721363" duration="16011000" />
       <workItem from="1665312324505" duration="13505000" />
       <workItem from="1665568047529" duration="4000" />
-      <workItem from="1665632131454" duration="24576000" />
+      <workItem from="1665632131454" duration="28695000" />
+      <workItem from="1665969837522" duration="689000" />
+      <workItem from="1666141986844" duration="2454000" />
+      <workItem from="1666250986420" duration="5356000" />
+      <workItem from="1666316607643" duration="4270000" />
+      <workItem from="1666685237871" duration="5242000" />
+      <workItem from="1666694647370" duration="12000" />
+      <workItem from="1666764676048" duration="29316000" />
+      <workItem from="1667179535500" duration="618000" />
+      <workItem from="1667304981010" duration="2256000" />
+      <workItem from="1667332187740" duration="48000" />
+      <workItem from="1667545787500" duration="17000" />
+      <workItem from="1669597048897" duration="30722000" />
     </task>
     <task id="LOCAL-00001" summary="version1">
       <created>1663140674609</created>
@@ -415,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665646776618</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="version1">
+      <created>1665736511255</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1665736511255</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

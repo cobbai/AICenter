@@ -50,36 +50,37 @@
       {% endif %}
     {% endwith %}
 
-    <h1>
-        Hello,
-        {% if current_user.is_authenticated %}
-            {{ current_user.name }}
-        {% else %}
-            Stranger
-        {% endif %}!
-    </h1>
-    <button><a href="{{ url_for('user.user_center') }}">用户中心</a></button>
-
-    {#快速创建表单：游客无法看到#}
-    <div>
-        {% if not current_user.is_anonymous %}
-            {{ wtf.quick_form(form) }}
-        {% endif %}
-    </div>
-
-    <div style="margin-top: 16px">
-        <ul class="nav nav-tabs">
-            <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('article.show_all') }}">All</a></li>
+    <div style="width: 100%">
+        <h1>
+            Hello,
             {% if current_user.is_authenticated %}
-                <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('article.show_followed') }}">Followed</a></li>
+                {{ current_user.name }}
+            {% else %}
+                Stranger
+            {% endif %}!
+        </h1>
+        <button><a href="{{ url_for('user.user_center') }}">用户中心</a></button>
+
+        {#快速创建表单：游客无法看到#}
+        <div>
+            {% if not current_user.is_anonymous %}
+                {{ wtf.quick_form(form) }}
             {% endif %}
-        </ul>
+        </div>
 
-        {# Blog展示：jinja2的include可以将html片段移到单独文件，然后导入使用 #}
-        {% include 'ui/_blogs.html' %}
-        {{ pg.page(blog_page, "user.index") }}
+        <div style="margin-top: 16px">
+            <ul class="nav nav-tabs">
+                <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('article.show_all') }}">All</a></li>
+                {% if current_user.is_authenticated %}
+                    <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('article.show_followed') }}">Followed</a></li>
+                {% endif %}
+            </ul>
+
+            {# Blog展示：jinja2的include可以将html片段移到单独文件，然后导入使用 #}
+            {% include 'ui/_blogs.html' %}
+            {{ pg.page(blog_page, "user.index") }}
+        </div>
     </div>
-
 
 {% endblock %}
 

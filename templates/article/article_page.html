@@ -35,6 +35,12 @@
             margin-left: 48px;
             min-height: 48px;
         }
+        .right-scrollsp {
+            position: sticky;  {# 粘贴位置：基于用户的滚动位置来定位 #}
+            position: -webkit-sticky;
+            top:4rem;  {# 指定 left right top bottom 之一，粘贴位置才能生效 #}
+            height: calc(100vh - 4rem);
+        }
     </style>
 {% endblock %}
 
@@ -66,58 +72,82 @@
       {% endif %}
     {% endwith %}
 
-    <h1>{{ article.title }}</h1>  {# 标题 #}
+    {# Flex布局：flex-grow-1 会弹性的利用空间 #}
+    {# data-spy="scroll" 滚动监听 #}
+    {# data-target="#navbar-example" 滚动监听 #}
+    <div id="article-content" class="flex-grow-1">
 
-    <p>
-        <strong>作者：</strong><a class="text-success" href="#">{{ article.user.name }}</a><br>
-        <strong>发布时间：</strong>{{ article.addtime }}<br>
-        <strong>星级：</strong>{{ article.star }}
-        <strong>浏览量：</strong>{{ article.read_num }}
-        <strong>评论量：</strong>{{ article.comment_num }}
-    </p>
+        <h1>{{ article.title }}</h1>  {# 标题 #}
 
-    <p>
-        {# 固定地址 #}
+        <p>
+            <strong>作者：</strong><a class="text-success" href="#">{{ article.user.name }}</a><br>
+            <strong>发布时间：</strong>{{ article.addtime }}<br>
+            <strong>星级：</strong>{{ article.star }}
+            <strong>浏览量：</strong>{{ article.read_num }}
+            <strong>评论量：</strong>{{ article.comment_num }}
+        </p>
 
-        <a class="badge badge-light" href="{{ url_for('article.article_page', tag_name_en=article.tag.tag_name_en, article_id=article.id) }}">
-            文章地址
-        </a>
-
-        <span style="padding-left: 1rem; padding-right: 1rem">•</span>
-
-        {# 自己或管理员可见 #}
-        {% if article.user == current_user or current_user.can(Permission.ADMIN)%}
-            <a class="badge badge-info" href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
-                <strong>编辑</strong>
+        <p>
+            {# 固定地址 #}
+            <a class="badge badge-light" href="{{ url_for('article.article_page', tag_name_en=article.tag.tag_name_en, article_id=article.id) }}">
+                文章地址
             </a>
-        {% endif %}
-    </p>
 
-    <hr>
-    {# 内容 #}
-   <div>
-{#        {%  if article.body_html %}#}
-{#            {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
-{#        {% else %}#}
-{#            {{ article.body_blob.decode('utf-8') | safe }}#}
-{#        {% endif %}#}
-        {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
-   </div>
+            <span style="padding-left: 1rem; padding-right: 1rem">•</span>
 
-    {# 评论 #}
-    <div>
-        {# id="comments" 提供url片段标记 #}
-        <h4 id="comments">Comments</h4>
-        {% if current_user.can(Permission.COMMENT) %}
-            <div>
-                {{ wtf.quick_form(form) }}
-            </div>
-        {% endif %}
-        {% include 'ui/_comments.html' %}
-        {# #comments url片段#用来标记滚动条起始位置 #}
-        {# 使得翻页时候能直接定位再评论位置 #}
-        {{ pg.page(pagination, "article.article_page", fragment='#comments', article_id=article.id, tag_name_en=article.tag.tag_name_en) }}
+            {# 自己或管理员可见 #}
+            {% if article.user == current_user or current_user.can(Permission.ADMIN)%}
+                <a class="badge badge-info" href="{{ url_for('article.article_add', article_id=article.id, edit=1) }}">
+                    <strong>编辑</strong>
+                </a>
+            {% endif %}
+        </p>
+
+        <hr>
+        {# 内容 #}
+       <div>
+    {#        {%  if article.body_html %}#}
+    {#            {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
+    {#        {% else %}#}
+    {#            {{ article.body_blob.decode('utf-8') | safe }}#}
+    {#        {% endif %}#}
+            {{ article.body_html | safe }}  {# safe 不转译HTML元素 #}
+       </div>
+
+        {# 评论 #}
+        <div>
+            {# id="comments" 提供url片段标记 #}
+            <h4 id="comments">Comments</h4>
+            {% if current_user.can(Permission.COMMENT) %}
+                <div>
+                    {{ wtf.quick_form(form) }}
+                </div>
+            {% endif %}
+            {% include 'ui/_comments.html' %}
+            {# #comments url片段#用来标记滚动条起始位置 #}
+            {# 使得翻页时候能直接定位再评论位置 #}
+            {{ pg.page(pagination, "article.article_page", fragment='#comments', article_id=article.id, tag_name_en=article.tag.tag_name_en) }}
+        </div>
+
     </div>
+
+    {# Display属性：.d-none .d-xl-block 只在 xl 尺寸的屏幕上显示 #}
+    {# 滚动监听toc #}
+    <nav id="article-toc" class="navbar navbar-light bg-light right-scrollsp d-xl-block col-xl-2">
+        <nav id="content-toc" class="nav nav-pills flex-column">
+{#        <a class="nav-link p-0" href="#title0">Item 1</a>#}
+{#        <nav class="nav nav-pills flex-column">#}
+{#          <a class="nav-link ml-3 my-1" href="#item-1-1">Item 1-1</a>#}
+{#          <a class="nav-link ml-3 my-1" href="#item-1-2">Item 1-2</a>#}
+{#        </nav>#}
+{#        <a class="nav-link" href="#item-2">Item 2</a>#}
+{#        <a class="nav-link" href="#item-3">Item 3</a>#}
+{#        <nav class="nav nav-pills flex-column">#}
+{#          <a class="nav-link ml-3 my-1" href="#item-3-1">Item 3-1</a>#}
+{#          <a class="nav-link ml-3 my-1" href="#item-3-2">Item 3-2</a>#}
+{#        </nav>#}
+        </nav>
+    </nav>
 
 {% endblock %}
 
@@ -127,4 +157,56 @@
     {{ super() }}
     {# 前端渲染彩色代码块prism #}
     <script src="{{ url_for('static', filename='extends/prism/prism.js') }}"></script>
+
+    {# 文章导航插件 #}
+    <script>
+        {# dom准备好后，给h1h2h3添加id，并生成目录 #}
+        var titleListMap = {};  // 记录每个 #title H标签层级关系
+        $(function () {
+            {# 先对h标签添加id #}
+            var tempH2 = "";
+            $("h2, h3").each(function (i) {
+                {#console.log($(this).get(0).tagName)#}
+                $(this).attr("id", "title" + i);  // 添加id
+                // titleLocMap["title" + i] = $(this).get(0).tagName;  // 记录标题元素的id字典
+                // titleLocMap["title" + i] = $(this).offset().top;  // offset(): 获取匹配元素在当前视口的相对top、left的偏移。
+                if ($(this).get(0).tagName === "H2") {
+                    titleListMap["title" + i] = [];
+                    tempH2 = "title" + i;
+                }
+                if ($(this).get(0).tagName === "H3") {
+                    titleListMap[tempH2].push("title" + i);
+                }
+            })
+
+            {# TOC #}
+            {#console.log(titleListMap);#}
+            $.each(titleListMap, function (h2, h3List) {
+                {# 添加H2 #}
+                var h2tag = $('#' + h2);
+                var elementsH1 = "<a class='nav-link p-0' href='#" + h2 +  "'>" + h2tag.html() + "</a>";
+                $("#content-toc").append(elementsH1);
+                {# 添加H3 #}
+                if (h3List.length > 0) {
+                    var h3content = "";
+                    for (var i = 0; i < h3List.length; i++) {
+                        var h3tag = $('#' + h3List[i]);
+                        var elementsH2 = "<a class='nav-link ml-3 my-1 p-0' href='#" + h3List[i] +  "'>" + h3tag.html() + "</a>";
+                        h3content += elementsH2;
+                    }
+                    var elementsNav = "<nav class='nav nav-pills flex-column'> " + h3content + "</nav>";
+                    $("#content-toc").append(elementsNav);
+                }
+            })
+
+            {# data-spy="scroll" data-target="#article-toc" data-offset="1" #}
+            $("body").scrollspy({
+                target: '#article-toc',
+                offet: 500,
+            })
+
+        })
+
+    </script>
+
 {% endblock %}

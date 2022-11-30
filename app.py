@@ -13,7 +13,7 @@ from datetime import datetime
 from apps.auth.model import Tag
 
 app = create_app()
-
+app.logger.info("app初始化完毕")
 
 # 404
 @app.errorhandler(404)

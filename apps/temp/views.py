@@ -72,3 +72,7 @@ def quickForm():
         return redirect(url_for('temp.quickForm'))
     return render_template("temp/quick_form.html", form=form)
 
+
+@temp_bp.route("/scrollspy/", methods=['GET'])
+def scrollspy():
+    return render_template("temp/scrollspy.html")
