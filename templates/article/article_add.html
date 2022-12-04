@@ -54,7 +54,6 @@
                 'visualblocks visualchars nonbreaking ' +
                 'lists advlist wordcount help autosave autoresize',
             // 工具栏
-            // 工具栏
             toolbar: [
                 'styles fontsize fontfamily | alignleft aligncenter alignright lineheight outdent indent bullist numlist',
                 'restoredraft searchreplace | codesample table image media charmap emoticons hr pagebreak insertdatetime',
@@ -65,7 +64,7 @@
             quickbars_selection_toolbar: "forecolor backcolor styles fontsize | lineheight removeformat",
             quickbars_insert_toolbar:"",
             // 上传图片后端处理地址
-            images_upload_url:{% if article_id %}"picture?article_id=" + {{ article_id }} {% else %} "picture" {% endif %},  // 选择好图片后的路由地址
+            images_upload_url:{% if article_id %}"/article/picture?article_id=" + {{ article_id }} {% else %} "/article/picture" {% endif %},  // 选择好图片后的路由地址
             relative_urls: false,  // 禁用图片相对路径地址，否则前端会加上 路由的prefix
             {#images_upload_base_path:"",  #}
             // 编辑区内的css：限制图片大下 行高

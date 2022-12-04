@@ -173,7 +173,7 @@ def article_del():
 
 
 # 5.图片上传
-@article_bp.route("/picture/", methods=["GET", "POST"])
+@article_bp.route("/picture/", methods=["GET", "POST"],  strict_slashes=False)  # strict_slashes=False : 不会再 严格的要求 斜杠
 @login_required
 @need_permission(Permission.WRITE)
 def picture():
@@ -184,6 +184,7 @@ def picture():
         # timce 自带图片验证，非图像传不上来
         # file_name = secure_filename(file.filename)
         file_name = uuid.uuid4().hex + "." + file.filename.split(".")[-1]
+        print(file_name)
         relative_path = "upload/article_image/"
         file_path = os.path.join(current_app.config['STATIC_DIR'], relative_path)
         if not os.path.exists(file_path):
