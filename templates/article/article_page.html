@@ -133,7 +133,7 @@
 
     {# Display属性：.d-none .d-xl-block 只在 xl 尺寸的屏幕上显示 #}
     {# 滚动监听toc #}
-    <nav id="article-toc" class="navbar navbar-light bg-light right-scrollsp d-xl-block col-xl-2">
+    <nav id="article-toc" class="navbar navbar-light bg-light right-scrollsp d-xl-block col-xl-3">
         <nav id="content-toc" class="nav nav-pills flex-column">
 {#        <a class="nav-link p-0" href="#title0">Item 1</a>#}
 {#        <nav class="nav nav-pills flex-column">#}
@@ -164,38 +164,54 @@
         var titleListMap = {};  // 记录每个 #title H标签层级关系
         $(function () {
             {# 先对h标签添加id #}
+            var tempH1 = "";
             var tempH2 = "";
-            $("h2, h3").each(function (i) {
+            $("h1, h2, h3").each(function (i) {
                 {#console.log($(this).get(0).tagName)#}
                 $(this).attr("id", "title" + i);  // 添加id
                 // titleLocMap["title" + i] = $(this).get(0).tagName;  // 记录标题元素的id字典
                 // titleLocMap["title" + i] = $(this).offset().top;  // offset(): 获取匹配元素在当前视口的相对top、left的偏移。
-                if ($(this).get(0).tagName === "H2") {
-                    titleListMap["title" + i] = [];
+                if ($(this).get(0).tagName === "H1") {
+                    titleListMap["title" + i] = {};
+                    tempH1 = "title" + i;
+                }
+                if ($(this).get(0).tagName === "H2" && tempH1 !== "") {
+                    titleListMap[tempH1]["title" + i] = [];
                     tempH2 = "title" + i;
                 }
-                if ($(this).get(0).tagName === "H3") {
-                    titleListMap[tempH2].push("title" + i);
+                if ($(this).get(0).tagName === "H3" && tempH2 !== "") {
+                    titleListMap[tempH1][tempH2].push("title" + i);
                 }
             })
 
             {# TOC #}
-            {#console.log(titleListMap);#}
-            $.each(titleListMap, function (h2, h3List) {
-                {# 添加H2 #}
-                var h2tag = $('#' + h2);
-                var elementsH1 = "<a class='nav-link p-0' href='#" + h2 +  "'>" + h2tag.html() + "</a>";
+            console.log(titleListMap);
+            $.each(titleListMap, function (h1, h2map) {
+                {# 添加H1 #}
+                var h1tag = $('#' + h1);
+                var elementsH1 = "<a class='nav-link p-0' href='#" + h1 +  "'>" + h1tag.html() + "</a>";
                 $("#content-toc").append(elementsH1);
-                {# 添加H3 #}
-                if (h3List.length > 0) {
-                    var h3content = "";
-                    for (var i = 0; i < h3List.length; i++) {
-                        var h3tag = $('#' + h3List[i]);
-                        var elementsH2 = "<a class='nav-link ml-3 my-1 p-0' href='#" + h3List[i] +  "'>" + h3tag.html() + "</a>";
-                        h3content += elementsH2;
-                    }
-                    var elementsNav = "<nav class='nav nav-pills flex-column'> " + h3content + "</nav>";
-                    $("#content-toc").append(elementsNav);
+                {# 添加H2 #}
+                var h2content = "";
+                if (Object.getOwnPropertyNames(h2map).length > 0) {
+                    $.each(h2map, function (h2, h3List) {
+                        var h2tag = $('#' + h2);
+                        var elementsH2 = "<a class='nav-link ml-3 my-1 p-0' href='#" + h2 +  "'>" + h2tag.html() + "</a>";
+                        h2content += elementsH2;
+                        {# 添加H3 #}
+                        if (h3List.length > 0) {
+                            var h3content = "";
+                            for (var i = 0; i < h3List.length; i++) {
+                                var h3tag = $('#' + h3List[i]);
+                                var elementsH3 = "<a class='nav-link ml-4 p-0' href='#" + h3List[i] +  "'>" + h3tag.html() + "</a>";
+                                h3content += elementsH3
+                            }
+                            var elements3Nav = "<nav class='nav nav-pills flex-column'> " + h3content + "</nav>";
+                            h2content += elements3Nav
+                        }
+                    });
+                    var elements2Nav = "<nav class='nav nav-pills flex-column'> " + h2content + "</nav>";
+                    $("#content-toc").append(elements2Nav);
                 }
             })
 
