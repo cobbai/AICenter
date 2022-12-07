@@ -52,16 +52,17 @@
             plugins: 'quickbars preview fullscreen searchreplace pagebreak insertdatetime ' +
                 'autolink link anchor image media template code codesample table charmap emoticons ' +
                 'visualblocks visualchars nonbreaking ' +
+                'code kityformula-editor indent2em ' +
                 'lists advlist wordcount help autosave autoresize',
             // 工具栏
             toolbar: [
-                'styles fontsize fontfamily | alignleft aligncenter alignright lineheight outdent indent bullist numlist',
-                'restoredraft searchreplace | codesample table image media charmap emoticons hr pagebreak insertdatetime',
+                'styles fontsize fontfamily | indent2em alignleft aligncenter alignright lineheight outdent indent bullist numlist',
+                'restoredraft searchreplace | codesample table image media charmap emoticons hr pagebreak insertdatetime | code kityformula-editor',
             ],
             // 右键菜单
             contextmenu: "cut copy paste pastetext link anchor",
             // quickbars
-            quickbars_selection_toolbar: "forecolor backcolor styles fontsize | lineheight removeformat",
+            quickbars_selection_toolbar: "forecolor backcolor styles fontsize | indent2em lineheight removeformat",
             quickbars_insert_toolbar:"",
             // 上传图片后端处理地址
             images_upload_url:{% if article_id %}"/article/picture?article_id=" + {{ article_id }} {% else %} "/article/picture" {% endif %},  // 选择好图片后的路由地址
