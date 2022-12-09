@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="version1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/article/article_add.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/article_add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/article/article_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/article/article_page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +78,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/cobb/Template_flask/AICenter/templates/auth&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/cobb/Template_python/7.Keras_Example/2 English-to-Spanish translation with a sequence-to-sequence Transformer&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
@@ -357,6 +357,8 @@
       <workItem from="1670119097911" duration="7594000" />
       <workItem from="1670202067944" duration="43000" />
       <workItem from="1670203309756" duration="16594000" />
+      <workItem from="1670466662342" duration="307000" />
+      <workItem from="1670565875372" duration="1978000" />
     </task>
     <task id="LOCAL-00001" summary="version1">
       <created>1663140674609</created>
