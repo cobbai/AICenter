@@ -127,7 +127,7 @@
                 </a>
                 <div class="collapse" id="article">
                     <ul class="nav flex-column sub-menu">
-                        {% for tag in tags %}
+                        {% for tag in article_tags %}
                             <li class="nav-item">
                                 <a class="nav-link sub-menu-link" href="{{ url_for('article.article_list', tag_name_en=tag.tag_name_en) }}">
                                     <span data-feather="chevron-down"></span>
@@ -148,19 +148,14 @@
                 </a>
                 <div class="collapse" id="nlp">
                     <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            {# TODO: 路由名结尾要包含 collapse 的 id #}
-                            <a class="nav-link sub-menu-link" href="{{ url_for('nlp.dynamicform') }}">
-                                <span data-feather="chevron-down"></span>
-                                nlp
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link sub-menu-link" href="#">
-                                <span data-feather="chevron-down"></span>
-                                cv
-                            </a>
-                        </li>
+                        {% for tag in nlp_tags %}
+                            <li class="nav-item">
+                                <a class="nav-link sub-menu-link" href="{{ url_for('nlp.dynamicform') }}">
+                                    <span data-feather="chevron-down"></span>
+                                    {{ tag.tag_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
               </li>
@@ -168,7 +163,7 @@
               <li class="nav-item">
                 <a class="nav-link menu-link" href="#">
                   <span data-feather="users"></span>
-                  Customers
+                  OpenCV
                 </a>
               </li>
               <li class="nav-item">

@@ -25,6 +25,7 @@ class TagForm(FlaskForm):
     new_tag = StringField("新标签名", validators=[DataRequired()])
     new_tag_en = StringField("新标签名（英文）", validators=[DataRequired()])
     tag = SelectField('现有标签', coerce=int)
+    source = StringField('标签来源', validators=[DataRequired()])
     submit = SubmitField(
         label='提交',
     )
@@ -32,7 +33,6 @@ class TagForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(TagForm, self).__init__(*args, **kwargs)
         self.tag.choices = [(tag.id, tag.tag_name) for tag in Tag.query.order_by(Tag.addtime.asc()).all()]
-
 
 # '''角色表单'''
 # class RoleForm(FlaskForm):

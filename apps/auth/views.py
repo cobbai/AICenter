@@ -142,6 +142,7 @@ def tag_add():
         tag = Tag.query.get_or_404(tag_id)
         form.new_tag.data = tag.tag_name
         form.new_tag_en.data = tag.tag_name_en
+        form.source.data = tag.source
 
     if form.validate_on_submit():
         # 判断 body 是否空
@@ -153,11 +154,13 @@ def tag_add():
             tag = Tag.query.get_or_404(tag_id)
             tag.tag_name = form.new_tag.data
             tag.tag_name_en = form.new_tag_en.data
+            tag.source = form.source.data
         else:
             # 新标签入库
             tag = Tag(
                 tag_name=form.new_tag.data,
                 tag_name_en=form.new_tag_en.data,
+                source=form.source.data,
             )
 
         db.session.add(tag)

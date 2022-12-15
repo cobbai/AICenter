@@ -53,10 +53,12 @@ def internal_server_error(e):
 # 返回结果必须是 dict, 然后其 key 将会作为变量在所有模板中可见)
 @app.context_processor
 def tpl_extra():
-    tags = Tag.query.all()
+    article_tags = Tag.query.filter_by(source="文章标签").all()
+    nlp_tags = Tag.query.filter_by(source="NLP模型标签").all()
     data = dict(
         current_time=datetime.utcnow(),  # base.html 中的 moment(current_time)
-        tags=tags,
+        article_tags=article_tags,
+        nlp_tags=nlp_tags,
     )
     return data
 
