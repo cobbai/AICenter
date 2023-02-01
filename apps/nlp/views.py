@@ -10,8 +10,8 @@ nlp_bp = Blueprint("nlp", __name__, url_prefix='/nlp')
 sim_model = BertSimilarity(os.getcwd() + "/engines/bert_similarity/text2vec_base_chinese")
 
 
-@nlp_bp.route('/dynamicform/', methods=['GET', 'POST'])
-def dynamicform():
+@nlp_bp.route('/SentenceSimilarity/', methods=['GET', 'POST'])
+def SentenceSimilarity():
 
     if request.method == "POST":
         data = {}
@@ -22,4 +22,15 @@ def dynamicform():
         result["time_cost"] = round(time.time() - t1, 2)
         return json.dumps(result)
 
-    return render_template("nlp/dynamicform.html")
+    return render_template("nlp/SentenceSimilarity.html")
+
+
+@nlp_bp.route('/TextClassification/', methods=['GET', 'POST'])
+def TextClassification():
+    return "ok"
+
+
+@nlp_bp.route('/Translation/', methods=['GET', 'POST'])
+def Translation():
+    return "ok"
+

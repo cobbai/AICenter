@@ -25,7 +25,7 @@ class DevelopmentConfig(Config):
     # SQLAlchemy
     # 连接数据库：SQLALCHEMY会从配置环境文件中找到这两个变量，将其值作为数据库连接
     # 数据库+驱动://用户名：密码@主机地址:端口/数据库
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://cobb:500627@127.0.0.1:3306/aicenter"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:root@127.0.0.1:3306/aicenter"
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # 降低内存消耗
 
     # Email
