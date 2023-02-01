@@ -150,7 +150,7 @@
                     <ul class="nav flex-column sub-menu">
                         {% for tag in nlp_tags %}
                             <li class="nav-item">
-                                <a class="nav-link sub-menu-link" href="{{ url_for('nlp.dynamicform') }}">
+                                <a class="nav-link sub-menu-link" href="{{ url_for('nlp.' + tag.tag_name_en) }}">
                                     <span data-feather="chevron-down"></span>
                                     {{ tag.tag_name }}
                                 </a>

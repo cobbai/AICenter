@@ -53,6 +53,7 @@ def internal_server_error(e):
 # 返回结果必须是 dict, 然后其 key 将会作为变量在所有模板中可见)
 @app.context_processor
 def tpl_extra():
+    # base.html 的导航栏需要全局标签变量
     article_tags = Tag.query.filter_by(source="文章标签").all()
     nlp_tags = Tag.query.filter_by(source="NLP模型标签").all()
     data = dict(

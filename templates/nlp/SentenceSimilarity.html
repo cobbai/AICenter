@@ -6,12 +6,16 @@
     <form>
         <p>
             <label>主文本</label>
-            <input class='form-control' name='source-sentence' placeholder='在此输入主文本' type='text'>
+            <label>
+                <input class='form-control' name='source-sentence' placeholder='在此输入主文本' type='text'>
+            </label>
         </p>
 
         <p>
             <label>对比文本</label>
-            <input class='form-control' name='compare-sentence' placeholder='在此输入对比文本' type='text'>
+            <label>
+                <input class='form-control' name='compare-sentence' placeholder='在此输入对比文本' type='text'>
+            </label>
         </p>
 
         <button id= "addSentence" class="btn btn-dark" type="button">添加句子</button>
@@ -47,8 +51,9 @@
         $("#result").empty()
 
         // ajax 请求数据
-        var text = $("form").serialize()
-        $.post("{{ url_for('nlp.dynamicform') }}", text, function (data) {
+        var text = $("form").serialize()  {# 将form里的内容序列化 #}
+
+        $.post("{{ url_for('nlp.SentenceSimilarity') }}", text, function (data) {
             // 回复计算按钮
             compute_button.prop("disabled", false)
             compute_button.html("计算")
