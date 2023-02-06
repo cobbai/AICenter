@@ -1,0 +1,74 @@
+{% extends "base.html"%}
+
+{% block title %}文本相似度{% endblock %}
+
+{% block main %}
+    <form>
+        <p>
+            <label>主文本</label>
+            <label>
+                <input class='form-control' name='source-sentence' placeholder='在此输入主文本' type='text'>
+            </label>
+        </p>
+
+        <p>
+            <label>对比文本</label>
+            <label>
+                <input class='form-control' name='compare-sentence' placeholder='在此输入对比文本' type='text'>
+            </label>
+        </p>
+
+        <button id= "addSentence" class="btn btn-dark" type="button">添加句子</button>
+        <button id= "compute" class="btn btn-dark" style="width: 6rem" type="button">计算</button>
+
+        <div id="result"></div>
+
+    </form>
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+<script>
+    // TODO: jquery 文本不为空
+
+    // 动态添加表单栏
+    var t = "<p><input class='form-control' name='compare-sentence' placeholder='在此输入对比文本' type='text'></p>"
+    $("#addSentence").click(function () {
+        $(this).before(t)
+    })
+
+    // 点击计算上传数据
+    $("#compute").click(function () {
+        // 计算按钮先变成加载状态
+        var compute_button = $(this)
+        compute_button.prop("disabled", true)
+        compute_button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span>')
+
+        // 清空结果div
+        $("#result").empty()
+
+        // ajax 请求数据
+        var text = $("form").serialize()  {# 将form里的内容序列化 #}
+
+        $.post("{{ url_for('nlp.SentenceSimilarity') }}", text, function (data) {
+            // 回复计算按钮
+            compute_button.prop("disabled", false)
+            compute_button.html("计算")
+
+            // 显示结果
+            {#console.log(data)#}
+            var timecosthtml = "<p>计算时长：" + data["time_cost"] + "</p>"
+            var content = ""
+            for(let i=0; i < data["compare-sentence"].length; i++){
+                content += '<p>' + data["compare-sentence"][i] + ': ' + data["score"][i+1] + '</p>'
+            }
+            var result = timecosthtml
+            $("#result").html(result + content)
+        }, "json")
+    })
+
+</script>
+{% endblock %}
