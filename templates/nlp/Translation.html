@@ -3,27 +3,30 @@
 {% block title %}文本相似度{% endblock %}
 
 {% block main %}
-    <form>
-        <p>
-            <label>主文本</label>
-            <label>
-                <input class='form-control' name='source-sentence' placeholder='在此输入主文本' type='text'>
-            </label>
-        </p>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <label>中文 -> 英文</label>
+                <br>
+                <textarea id="text1" class='form-control' placeholder='在此输入文本'></textarea>
+                <button id= "compute1" class="btn btn-dark" style="width: 6rem" type="button" onclick="compute(this, '#result1', '#text1')">计算</button>
 
-        <p>
-            <label>对比文本</label>
-            <label>
-                <input class='form-control' name='compare-sentence' placeholder='在此输入对比文本' type='text'>
-            </label>
-        </p>
+                <div id="result1"></div>
 
-        <button id= "addSentence" class="btn btn-dark" type="button">添加句子</button>
-        <button id= "compute" class="btn btn-dark" style="width: 6rem" type="button">计算</button>
+            </div>
 
-        <div id="result"></div>
+            <div class="col">
+                <label>英文 -> 中文</label>
+                <br>
+                <textarea id="text2" class='form-control' placeholder='在此输入文本'></textarea>
+                <button id= "compute" class="btn btn-dark" style="width: 6rem" type="button" onclick="compute(this, '#result2', '#text2')">计算</button>
 
-    </form>
+                <div id="result2"></div>
+
+            </div>
+
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -32,28 +35,18 @@
 {% block scripts %}
 {{ super() }}
 <script>
-    // TODO: jquery 文本不为空
-
-    // 动态添加表单栏
-    var t = "<p><input class='form-control' name='compare-sentence' placeholder='在此输入对比文本' type='text'></p>"
-    $("#addSentence").click(function () {
-        $(this).before(t)
-    })
-
-    // 点击计算上传数据
-    $("#compute").click(function () {
+    function compute(btn, result, content) {
         // 计算按钮先变成加载状态
-        var compute_button = $(this)
+        var compute_button = $(btn)
         compute_button.prop("disabled", true)
         compute_button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span>')
 
         // 清空结果div
-        $("#result").empty()
+        $(result).empty()
 
         // ajax 请求数据
-        var text = $("form").serialize()  {# 将form里的内容序列化 #}
-
-        $.post("{{ url_for('nlp.SentenceSimilarity') }}", text, function (data) {
+        var text = $(content).val()
+        $.post("{{ url_for('nlp.Translation') }}", {'content':[content,text]}, function (data) {
             // 回复计算按钮
             compute_button.prop("disabled", false)
             compute_button.html("计算")
@@ -61,14 +54,10 @@
             // 显示结果
             {#console.log(data)#}
             var timecosthtml = "<p>计算时长：" + data["time_cost"] + "</p>"
-            var content = ""
-            for(let i=0; i < data["compare-sentence"].length; i++){
-                content += '<p>' + data["compare-sentence"][i] + ': ' + data["score"][i+1] + '</p>'
-            }
-            var result = timecosthtml
-            $("#result").html(result + content)
+            var content = data["translation_text"]
+            $(result).html(timecosthtml + content)
         }, "json")
-    })
+    }
 
 </script>
 {% endblock %}

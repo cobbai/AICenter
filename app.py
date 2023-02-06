@@ -87,5 +87,5 @@ manage.add_command("db_command", MigrateCommand)  # 连接manage
 if __name__ == '__main__':
     # 函数 run() 启动本地服务器来运行我们的应用app
     # app.run(host='0.0.0.0')  # 这让你的操作系统去监听所有公开的 IP。外网访问时需要输入 本服务器IP + 关闭防火墙
-    # app.run(port=5000)
+    # app.run(port=5000)  # debug用
     manage.run()  # python app.py runserver

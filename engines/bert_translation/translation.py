@@ -52,7 +52,7 @@ def temp_test2():
     model_en_zh = Translation("../models/Helsinki-NLP/opus-mt-en-zh")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
-    sentence = "Transformers library was created to solve this problem. Its goal is to provide a single API through which any Transformer model can be loaded, trained, and saved. The library’s main features are:"
+    sentence = "The message port closed"
     result = model_en_zh.translate(sentence)
     t3 = time.time()
     print("预测时长：" + str(t3 - t2))
@@ -81,6 +81,6 @@ def temp():
 
 
 if __name__ == '__main__':
-    temp_test1()
-    # temp_test2()
+    # temp_test1()
+    temp_test2()
     # temp()
