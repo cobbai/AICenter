@@ -57,7 +57,7 @@ class BertSimilarity(object):
 
 if __name__ == '__main__':
     t1 = time.time()
-    model = BertSimilarity("./text2vec_base_chinese")
+    model = BertSimilarity("../models/text2vec_base_chinese")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
     result = model.compute({"text":["logo设计"], "compare":["商标设计", "软件设计", "庭院设计"]})
