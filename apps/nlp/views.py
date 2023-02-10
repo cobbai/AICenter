@@ -4,6 +4,8 @@ from flask import Blueprint, render_template, request, jsonify
 from engines.bert_similarity.bertsimilarity import BertSimilarity
 from engines.bert_translation.translation import Translation
 from engines.bert_ner.ner import NER
+from engines.bert_qa.qa import QA
+from engines.bert_classification.classification import Classification
 import time
 
 nlp_bp = Blueprint("nlp", __name__, url_prefix='/nlp')
@@ -13,6 +15,8 @@ bert_translation_zh_en = Translation(os.getcwd() + "/engines/models/Helsinki-NLP
 bert_translation_en_zh = Translation(os.getcwd() + "/engines/models/Helsinki-NLP/opus-mt-en-zh")
 bert_ner = NER(os.getcwd() + "/engines/models/bert-base-chinese", os.getcwd() + "/engines/models/ckiplab/bert-base-chinese-ner")
 bert_pos = NER(os.getcwd() + "/engines/models/bert-base-chinese", os.getcwd() + "/engines/models/ckiplab/bert-base-chinese-pos")
+bert_qa = QA(os.getcwd() + "/engines/models/uer/roberta-base-chinese-extractive-qa")
+bert_classification = Classification(os.getcwd() + "/engines/models/total_category1_score_new_0.5")
 
 
 @nlp_bp.route('/SentenceSimilarity/', methods=['GET', 'POST'])
@@ -64,9 +68,25 @@ def Translation():
 
 @nlp_bp.route('/QuestionAnswering/', methods=['GET', 'POST'])
 def QuestionAnswering():
-    return "ok"
+    if request.method == "POST":
+        content = request.form.to_dict()
+        result = {}
+        t1 = time.time()
+        result["ans"] = bert_qa.compute(content["context"], content["question"])["answer"]
+        result["time_cost"] = round(time.time() - t1, 2)
+        return json.dumps(result)
+
+    return render_template("nlp/QA.html")
 
 
 @nlp_bp.route('/TextClassification/', methods=['GET', 'POST'])
 def TextClassification():
-    return "ok"
+    if request.method == "POST":
+        content = request.form.to_dict()
+        result = {}
+        t1 = time.time()
+        result["ans"] = bert_classification.compute(content["context"])
+        result["time_cost"] = round(time.time() - t1, 2)
+        return json.dumps(result)
+
+    return render_template("nlp/TextClassification.html")
