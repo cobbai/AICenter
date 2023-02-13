@@ -2,7 +2,7 @@ import time
 import os
 from tensorflow import keras
 import jieba
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 class Classification:
     def __init__(self, modelpath):
