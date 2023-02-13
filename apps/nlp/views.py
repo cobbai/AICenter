@@ -6,6 +6,7 @@ from engines.bert_translation.translation import Translation
 from engines.bert_ner.ner import NER
 from engines.bert_qa.qa import QA
 from engines.bert_classification.classification import Classification
+from engines.bert_textgeneration.textgeneration import TextGeneration
 import time
 
 nlp_bp = Blueprint("nlp", __name__, url_prefix='/nlp')
@@ -16,7 +17,7 @@ bert_translation_en_zh = Translation(os.getcwd() + "/engines/models/Helsinki-NLP
 bert_ner = NER(os.getcwd() + "/engines/models/bert-base-chinese", os.getcwd() + "/engines/models/ckiplab/bert-base-chinese-ner")
 bert_pos = NER(os.getcwd() + "/engines/models/bert-base-chinese", os.getcwd() + "/engines/models/ckiplab/bert-base-chinese-pos")
 bert_qa = QA(os.getcwd() + "/engines/models/uer/roberta-base-chinese-extractive-qa")
-bert_classification = Classification(os.getcwd() + "/engines/models/total_category1_score_new_0.5")
+bert_textgeneration = TextGeneration(os.getcwd() + "/engines/models/uer/gpt2-chinese-cluecorpussmall")
 
 
 @nlp_bp.route('/SentenceSimilarity/', methods=['GET', 'POST'])
@@ -82,6 +83,7 @@ def QuestionAnswering():
 @nlp_bp.route('/TextClassification/', methods=['GET', 'POST'])
 def TextClassification():
     if request.method == "POST":
+        bert_classification = Classification(os.getcwd() + "/engines/models/total_category1_score_new_0.5")
         content = request.form.to_dict()
         result = {}
         t1 = time.time()
@@ -90,3 +92,16 @@ def TextClassification():
         return json.dumps(result)
 
     return render_template("nlp/TextClassification.html")
+
+
+@nlp_bp.route('/TextGeneration/', methods=['GET', 'POST'])
+def TextGeneration():
+    if request.method == "POST":
+        content = request.form.to_dict()
+        result = {}
+        t1 = time.time()
+        result["ans"] = bert_textgeneration.compute(content["context"])[0]["generated_text"]
+        result["time_cost"] = round(time.time() - t1, 2)
+        return json.dumps(result)
+
+    return render_template("nlp/TextGeneration.html")

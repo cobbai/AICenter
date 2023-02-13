@@ -1,0 +1,53 @@
+{% extends "base.html"%}
+
+{% block title %}文本生成{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <label>文本生成</label>
+                <br>
+                <textarea id="text" class='form-control' placeholder='在此输入文本'></textarea>
+                <button id= "compute" class="btn btn-dark" style="width: 6rem" type="button" onclick="compute(this, '#text')">计算</button>
+
+                <div id="result"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+<script>
+    function compute(btn, text) {
+        // 计算按钮先变成加载状态
+        var compute_button = $(btn)
+        compute_button.prop("disabled", true)
+        compute_button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span>')
+
+        // 清空结果div
+        $('#result').empty()
+
+        // ajax 请求数据
+        var text = $(text).val()
+        $.post("{{ url_for('nlp.TextGeneration') }}", {'context':text}, function (data) {
+            // 回复计算按钮
+            compute_button.prop("disabled", false)
+            compute_button.html("计算")
+
+            // 显示结果
+            {#console.log(data)#}
+            var timecosthtml = "<p>计算时长：" + data["time_cost"] + "</p>"
+            var ans = data["ans"]
+            $(result).html(timecosthtml + ans)
+        }, "json")
+    }
+
+</script>
+{% endblock %}
