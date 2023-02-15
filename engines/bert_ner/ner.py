@@ -3,7 +3,7 @@ import tensorflow as tf
 from transformers import pipeline, BertTokenizerFast, AutoModelForTokenClassification
 
 
-class NER:
+class NamedEntityRecognition:
     def __init__(self, tokenpath, modelpath):
         self.model_file = modelpath
         # 以字符分割的 tokenizer
@@ -63,7 +63,7 @@ class NER:
 
 def temp_test1():
     t1 = time.time()
-    model = NER("../models/bert-base-chinese", "../models/ckiplab/bert-base-chinese-ner")
+    model = NamedEntityRecognition("../models/bert-base-chinese", "../models/ckiplab/bert-base-chinese-ner")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
     sentence = "国台办发言人朱凤莲答记者问。(中国台湾网 尹赛楠 摄) 国台办发言人朱凤莲答记者问。(中国台湾网 尹赛楠 摄) 中国台湾网2月8日."
@@ -76,7 +76,7 @@ def temp_test1():
 
 def temp_test2():
     t1 = time.time()
-    model = NER("../models/bert-base-chinese", "../models/ckiplab/bert-base-chinese-pos")
+    model = NamedEntityRecognition("../models/bert-base-chinese", "../models/ckiplab/bert-base-chinese-pos")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
     sentence = "我叫克拉拉，我住在加州伯克利。"

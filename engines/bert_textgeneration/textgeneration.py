@@ -3,7 +3,7 @@ import tensorflow as tf
 from transformers import BertTokenizer, GPT2LMHeadModel, TextGenerationPipeline
 
 
-class TextGeneration:
+class TextGenerate:
     def __init__(self, modelpath):
         self.tokenizer = BertTokenizer.from_pretrained(modelpath)
         self.model = GPT2LMHeadModel.from_pretrained(modelpath)
@@ -20,7 +20,7 @@ class TextGeneration:
 
 if __name__ == '__main__':
     t1 = time.time()
-    model = TextGeneration("../models/uer/gpt2-chinese-cluecorpussmall")
+    model = TextGenerate("../models/uer/gpt2-chinese-cluecorpussmall")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
     result = model.compute("这是很久之前的事情了")

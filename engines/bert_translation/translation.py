@@ -5,7 +5,7 @@ from optimum.bettertransformer import BetterTransformer
 import tensorflow as tf
 
 
-class Translation:
+class TextTranslation:
     def __init__(self, modelpath):
         self.model_file = modelpath  # max_length=512
 
@@ -37,7 +37,7 @@ class Translation:
 
 def temp_test1():
     t1 = time.time()
-    model_zh_en = Translation("../models/Helsinki-NLP/opus-mt-zh-en")
+    model_zh_en = TextTranslation("../models/Helsinki-NLP/opus-mt-zh-en")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
     sentence = "选择一些句子对A与B，其中50%的数据B是A的下一条句子，剩余50%的数据B是语料库中随机选择的，学习其中的相关性，添加这样的预训练的目的是目前很多NLP的任务比如QA和NLI都需要理解两个句子之间的关系，从而能让预训练的模型更好的适应这样的任务"
@@ -49,7 +49,7 @@ def temp_test1():
 
 def temp_test2():
     t1 = time.time()
-    model_en_zh = Translation("../models/Helsinki-NLP/opus-mt-en-zh")
+    model_en_zh = TextTranslation("../models/Helsinki-NLP/opus-mt-en-zh")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
     sentence = "The message port closed"
