@@ -15,6 +15,8 @@
 
             </div>
 
+
+            <canvas id="myChart" width="50" height="50"></canvas>
         </div>
     </div>
 
@@ -24,6 +26,9 @@
 <!--js脚本-->
 {% block scripts %}
 {{ super() }}
+
+<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+
 <script>
     function compute(btn, text) {
         // 计算按钮先变成加载状态
@@ -48,6 +53,27 @@
             $(result).html(timecosthtml + ans)
         }, "json")
     }
+
+    {# 训练结果图 #}
+    var ctx = $("#myChart");
+    const X = ['一月份', '二月份', '三月份','四月份', '五月份', '六月份', '七月份'];  // 设置 X 轴上对应的标签
+    const Y = [65, 59, 80, 81, 56, 55, 40]
+    const data = {
+      labels: X,
+      datasets: [{
+        label: 'loss',
+        data: Y,
+        fill: false,  // 折线以下的背景颜色
+        borderColor: 'rgb(75, 192, 192)', // 设置线的颜色
+        tension: 0.1,  // 拐点处曲率
+      }]
+    };
+    const config = {
+      type: 'line', // 设置图表类型
+      data: data,
+    };
+    const myChart = new Chart(ctx, config);
+
 
 </script>
 {% endblock %}

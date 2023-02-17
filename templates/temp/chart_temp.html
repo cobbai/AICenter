@@ -7,7 +7,11 @@
 {% endblock %}
 
 {% block main %}
-    <canvas id="myChart" width="400" height="400"></canvas>
+    <div>
+        <canvas id="myChart" width="300" height="300"></canvas>
+        <br>
+        <canvas id="myChartD" width="300" height="300"></canvas>
+    </div>
 {% endblock %}
 
 
@@ -17,8 +21,9 @@
     {# 图表库  https://www.chartjs.org/docs/2.9.4/#}
 {#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>#}
     <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
-<script>
-    var ctx = document.getElementById('myChart').getContext('2d');
+    <script>
+    {#var ctx = document.getElementById('myChart').getContext('2d');#}
+    var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -55,5 +60,39 @@
             }
         }
     });
+
+    {# 动态图 #}
+    var myData = [{x:0,y:0},{x:1,y:2},{x:2,y:1},{x:3,y:3}];
+    var ctxD = $("#myChartD");
+    var myChartD = new Chart(ctxD, {
+        type: 'line',
+        data: {
+            datasets:[{
+                data: [myData[0]],
+                lineTension: 0
+            }]
+        },
+        labels:['a','b','c','d','e','f',],
+        options: {
+            scales: {
+                xAxes:[{type:'linear', ticks:{min: 0, max:3}}],
+                yAxes:[{ticks:{min: 0, max:3}}]
+            }
+        }
+    });
+
+    var next = function() {
+        var data = myChartD.data.datasets[0].data;
+        var count = data.length;
+        data[count] = data[count - 1];
+        myChartD.update({duration:0});
+        data[count] = myData[count];
+        myChartD.update();
+        if (count < myData.length) {
+            setTimeout(next, 1000);
+        }
+    }
+    setTimeout(next, 1000);
+
 </script>
 {% endblock %}
