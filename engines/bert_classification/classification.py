@@ -6,6 +6,7 @@ import pandas as pd
 from tensorflow import keras
 import jieba
 import keras_nlp
+from transformers import BertTokenizerFast
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
@@ -60,8 +61,9 @@ class Classification:
                                 18157: "技术服务", 18052: "翻译服务", 3128: "人力资源", 18338: "印刷服务",
                                 18235: "企业后勤服务", 4794: "科技研究开发", 18249: "企业培训", 4788: "科技咨询"}
         else:
-            self.df = pd.read_csv(datapath)
-            self.MAX_SENT_LENGTH = 150
+            self.tokenizer = BertTokenizerFast.from_pretrained("../models/bert-base-chinese")  # 以字符分割的 tokenizer
+            self.df = pd.read_csv(datapath, sep="\t", quoting=3).head()
+            self.MAX_SENT_LENGTH = 500
 
     def compute(self, sentence):
         X = [self.word_index[x] if x in self.word_index else 1 for x in jieba.cut(sentence)]
@@ -97,28 +99,16 @@ class Classification:
         model.summary()
         return model
 
-    def train(self):
-        title = self.df.columns[0]
-        categoryid = self.df.columns[-1]
-        word_freq = {}
-        for x in self.df[title]:
-            for w in x.split(" "): word_freq[w] = word_freq.get(w, 0) + 1
-        word_freq = pd.DataFrame({"words": word_freq.keys(), "freq": word_freq.values()})
-        word_freq = word_freq.loc[word_freq["freq"] > 5, :]
-        word_freq = word_freq.sort_values(by="freq", ascending=False).reset_index(drop=True).reset_index()
-        word_freq["index"] = word_freq["index"].apply(lambda x: x + 2)
+    def train(self, text, label):
+        self.df["vec"] = self.df[text].apply(lambda x:self.tokenizer(str.lower(x))["input_ids"][1:-1])
+
         word_freq_idx = {}
-        if os.path.exists("./new_word_counts.txt"): os.remove("./new_word_counts.txt")
-        with open("./new_word_counts.txt", "w", encoding="utf-8") as w:
-            for i in range(word_freq.shape[0]):
-                word_freq_idx[word_freq.iloc[i, 1]] = word_freq.iloc[i, 0]
-                w.write(str(word_freq.iloc[i, 1]) + "\t" + str(word_freq.iloc[i, 0]) + "\n")
 
         # 建模
-        self.df["title_vec"] = self.df[title].apply(
+        self.df["title_vec"] = self.df[text].apply(
             lambda x: [word_freq_idx[w] if w in word_freq_idx else 1 for w in x.split(" ")])
-        data = self.df.merge(self.df[categoryid].drop_duplicates().reset_index(drop=True).reset_index(), how="left",
-                          on=categoryid)
+        data = self.df.merge(self.df[label].drop_duplicates().reset_index(drop=True).reset_index(), how="left",
+                          on=label)
         X = keras.preprocessing.sequence.pad_sequences(data["title_vec"].to_list(), maxlen=self.MAX_SENT_LENGTH,
                                                        padding="post", truncating="post")
         # Y = keras.utils.to_categorical(data["index"].to_list(), num_classes=self.NUM_CLASSES - 1)
@@ -127,7 +117,7 @@ class Classification:
         callbacks = [CustomerCallback("./log")]
 
         MAX_NB_WORDS = pd.read_csv("./new_word_counts.txt", names=["word", "idx"], sep="\t").shape[0] + 2
-        NUM_CLASSES = len(self.df[categoryid].drop_duplicates())
+        NUM_CLASSES = len(self.df[label].drop_duplicates())
         model = self.train_model(self.MAX_SENT_LENGTH, MAX_NB_WORDS, NUM_CLASSES)
 
         model.compile(
@@ -158,10 +148,10 @@ def temp_predict():
 
 def temp_train():
     t1 = time.time()
-    model = Classification(modelpath=None, datapath="./data.csv")
+    model = Classification(modelpath=None, datapath="../datasets/job_detail_file.txt")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
-    model.train()
+    model.train("title", "category3id")
     t3 = time.time()
 
     print("预测时长：" + str(t3 - t2))

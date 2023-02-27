@@ -99,6 +99,11 @@ def TextClassification():
     return render_template("nlp/TextClassification.html")
 
 
+@nlp_bp.route('/getlog/', methods=['GET', 'POST'])
+def getlog():
+
+    return ""
+
 @nlp_bp.route('/TextGeneration/', methods=['GET', 'POST'])
 def TextGeneration():
     if request.method == "POST":
