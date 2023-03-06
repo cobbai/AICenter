@@ -5,12 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/cv/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/cv/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/nlp/TextClassificationTrainer.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apps/nlp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nlp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/temp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/temp/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engines/bert_classification/classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/engines/bert_classification/classification.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/nlp/QA.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/QA.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/nlp/TextClassification.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/TextClassification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/temp/chart_temp.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/temp/chart_temp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/nlp/TextGeneration.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/TextGeneration.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,9 +28,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -79,26 +87,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Template_spark/keyword-manager&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Template_flask/AICenter/templates/nlp",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Template_flask\AICenter\engines\bert_textgeneration" />
       <recent name="D:\Template_flask\AICenter\templates\nlp" />
+      <recent name="D:\Template_flask\AICenter\engines\bert_textgeneration" />
       <recent name="D:\Template_flask\AICenter\engines\bert_qa" />
       <recent name="D:\Template_flask\AICenter\engines\distillation" />
       <recent name="D:\Template_flask\cobb_AIweb\templates" />
@@ -126,6 +134,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/engines/bert_classification/classification.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="consultcnt" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AICenter" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/engines/cluster" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/engines/cluster/consultcnt.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -222,35 +252,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="textgeneration" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="AICenter" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/engines/bert_textgeneration" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/engines/bert_textgeneration/textgeneration.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.classification (1)" />
+        <item itemvalue="Python.consultcnt" />
         <item itemvalue="Python.numcluster" />
         <item itemvalue="Python.sequence" />
         <item itemvalue="Python.ner" />
-        <item itemvalue="Python.textgeneration" />
       </list>
     </recent_temporary>
   </component>
@@ -402,7 +410,11 @@
       <workItem from="1676597547502" duration="249000" />
       <workItem from="1676597809035" duration="12619000" />
       <workItem from="1676856078590" duration="65061000" />
-      <workItem from="1677460443686" duration="9694000" />
+      <workItem from="1677460443686" duration="44413000" />
+      <workItem from="1677723593144" duration="31995000" />
+      <workItem from="1677895640911" duration="5043000" />
+      <workItem from="1678008930008" duration="6126000" />
+      <workItem from="1678065007633" duration="27086000" />
     </task>
     <task id="LOCAL-00001" summary="version1">
       <created>1663140674609</created>
@@ -593,7 +605,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676628716928</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="version1">
+      <created>1677482436187</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1677482436187</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,19 +689,14 @@
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/engines/cluster/numcluster.py</url>
-          <line>121</line>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/engines/cluster/numcluster.py</url>
-          <line>79</line>
-          <option name="timeStamp" value="64" />
+          <url>file://$PROJECT_DIR$/engines/bert_classification/classification.py</url>
+          <line>59</line>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/engines/bert_classification/classification.py</url>
-          <line>104</line>
-          <option name="timeStamp" value="68" />
+          <line>49</line>
+          <option name="timeStamp" value="82" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -700,11 +714,12 @@
     <SUITE FILE_PATH="coverage/AICenter$sequence.coverage" NAME="sequence Coverage Results" MODIFIED="1676876900805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/cluster" />
     <SUITE FILE_PATH="coverage/AICenter$main_optimization.coverage" NAME="main_optimization Coverage Results" MODIFIED="1663729864922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Template_python/6.Recomdation" />
     <SUITE FILE_PATH="coverage/AICenter$app.coverage" NAME="app Coverage Results" MODIFIED="1675667224888" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/AICenter$numcluster.coverage" NAME="numcluster Coverage Results" MODIFIED="1677460831738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/cluster" />
+    <SUITE FILE_PATH="coverage/AICenter$numcluster.coverage" NAME="numcluster Coverage Results" MODIFIED="1677490954893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/cluster" />
     <SUITE FILE_PATH="coverage/AICenter$fragment.coverage" NAME="fragment Coverage Results" MODIFIED="1675322145464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/AICenter$translation_zh_en.coverage" NAME="translation_zh_en Coverage Results" MODIFIED="1675652077493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_translation" />
     <SUITE FILE_PATH="coverage/AICenter$translation__1_.coverage" NAME="translation (1) Coverage Results" MODIFIED="1675669874090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_translation" />
-    <SUITE FILE_PATH="coverage/AICenter$classification__1_.coverage" NAME="classification (1) Coverage Results" MODIFIED="1677481994737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_classification" />
+    <SUITE FILE_PATH="coverage/AICenter$consultcnt.coverage" NAME="consultcnt Coverage Results" MODIFIED="1677571417177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/cluster" />
+    <SUITE FILE_PATH="coverage/AICenter$classification__1_.coverage" NAME="classification (1) Coverage Results" MODIFIED="1678086761365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_classification" />
     <SUITE FILE_PATH="coverage/AICenter$textgeneration.coverage" NAME="textgeneration Coverage Results" MODIFIED="1676266955067" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_textgeneration" />
     <SUITE FILE_PATH="coverage/AICenter$classification.coverage" NAME="classification Coverage Results" MODIFIED="1675992811956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/bert_classification" />
     <SUITE FILE_PATH="coverage/AICenter$kmeans.coverage" NAME="kmeans Coverage Results" MODIFIED="1672900318692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/engines/cluster" />

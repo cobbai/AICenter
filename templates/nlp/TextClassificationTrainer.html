@@ -1,0 +1,187 @@
+{% extends "base.html"%}
+
+{% block title %}文本分类训练器{% endblock %}
+
+{% block main %}
+    <div class="container">
+        {# 训练 #}
+        <label>训练器</label>
+        <form action="{{ url_for('nlp.TextClassificationTrainer') }}" method="post" enctype="multipart/form-data">
+            <input id="customerfile" name="customerfile" type="file">
+            <br>
+            <label>分隔符</label>
+            <select id="sep" name="sep">
+                <option value="1">逗号</option>
+                <option value="2">制表符</option>
+            </select>
+            <button id="submit" type="submit">上传</button>
+        </form>
+
+        <label>数据预览</label>
+        <div>
+            <table id="dataview" border="1">
+            </table>
+        </div>
+
+        <label>目标</label>
+        <select id="label" name="label">
+                <option value="1">字段1</option>
+                <option value="2">字段2</option>
+        </select>
+
+        <label>特征</label>
+        <select id="feature" name="feature">
+                <option value="1">字段1</option>
+                <option value="2">字段2</option>
+        </select>
+
+        <label>取样比例</label>
+{#        <input type="range" class="form-control-range" id="frac" min="1" max="100" value="10">#}
+        <input id="frac" type="text" min="1" max="100" value="0.01" placeholder="输入取样比例（1-100）">
+
+        <label>epochs</label>
+        <input id="epoch" type="text" min="1" max="50" value="10" placeholder="10">
+
+        {# 训练按钮 #}
+        <button id= "train" class="btn btn-dark" style="width: 6rem" type="button" onclick="train(this)">训练</button>
+
+        {# 训练日志 #}
+        <div id="trainLog"></div>
+
+        {# 进度条 #}
+        <div class="progress">
+          <div id="trainProgress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+        </div>
+
+        <canvas id="myChart" width="50" height="50"></canvas>
+    </div>
+
+{% endblock %}
+
+
+<!--js脚本-->
+{% block scripts %}
+{{ super() }}
+
+<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+
+<script>
+    {# 训练过程 #}
+    function train(btn){
+        // 多线程
+        /*
+        var worker = new Worker("{{ url_for('static', filename='js/redisQueueWorker.js') }}");
+        worker.postMessage("{{ url_for('nlp.getlog') }}");
+        worker.onmessage = function (e) {
+            if(e.data == 5) {
+                worker.terminate();
+            }
+        }
+        */
+
+        // 计算按钮先变成加载状态
+        var compute_button = $(btn)
+        compute_button.prop("disabled", true)
+        compute_button.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="sr-only">Loading...</span>')
+
+        // 获取选项
+        var label = $("#label option:selected").text();
+        var feature = $("#feature option:selected").text();
+        var frac = $("#frac").val();
+        var epoch = $("#epoch").val();
+        var trainProgress = $('#trainProgress');
+        trainProgress.attr({"style": "width:0%", "aria-valuenow":"0"});
+        trainProgress.text("0%");
+
+        // 启动训练线程
+        $.post("{{ url_for('nlp.TextClassificationTrainer') }}", {'label':label, 'feature':feature, 'frac':frac, 'epoch':epoch})
+
+        // 获取训练日志队列
+        var num = "";
+        var trainLog = "";
+        var inter = setInterval(function () {
+            $.get("{{ url_for('nlp.getlog') }}", function (res) {
+                // console.log(res)
+                if (res["data"] !== "empty") {
+                    num = res["data"].match(/\d+/)[0];
+
+                    // 显示训练日志
+                    trainLog += res["data"]
+                    // $('#trainLog').html(trainLog)
+
+                    // 进度条
+                    var n = Math.trunc(((parseInt(num) + 1) / parseInt(epoch)) * 100);
+                    trainProgress.attr({"style": "width:" + n.toString() + "%", "aria-valuenow":n.toString()});
+                    trainProgress.text(n.toString() + "%");
+
+                    // 最后一个批次停止循环
+                    if (parseInt(num) === parseInt(epoch) - 1) {
+                        compute_button.prop("disabled", false);
+                        compute_button.html("训练");
+                        clearInterval(inter);
+                    }
+                }
+            });
+        }, 2000);
+    }
+
+    {# 加载预览数据 #}
+    $(function () {
+        {# 显示后端传入的预览数据 #}
+        $('#dataview').empty();
+        $('#label').empty();
+        $('#feature').empty();
+        var table = "<tr><th>列1</th><th>列2</th></tr>";
+        var col = '<option value="0">无列名</option>';
+
+        var dataview = {{ dataview | tojson | safe }}
+        if (typeof dataview === "string") {
+            // 无数据
+            $('#dataview').html(table);  // 预览
+            $('#label').html(col);  // 列名
+            $('#feature').html(col);
+        } else {
+            // 上传自定义数据
+            table = "";
+            var is_header = true;
+            col = "";
+            for (var i in dataview) {
+                var line = "";
+                for(var j in dataview[i]) {
+                    line += "<th>" + dataview[i][j] + "</th>"
+                    if (is_header) {
+                        col += '<option value="' + j + '">' + dataview[i][j] + '</option>'
+                    }
+                }
+                is_header = false
+                table += "<tr>" + line + "</tr>";
+            }
+            $('#dataview').html(table);
+            $('#label').html(col);  // 列名
+            $('#feature').html(col);
+        }
+    });
+
+    {# 训练结果图 #}
+    var ctx = $("#myChart");
+    const X = ['一月份', '二月份', '三月份','四月份', '五月份', '六月份', '七月份'];  // 设置 X 轴上对应的标签
+    const Y = [65, 59, 80, 81, 56, 55, 40]
+    const data = {
+      labels: X,
+      datasets: [{
+        label: 'loss',
+        data: Y,
+        fill: false,  // 折线以下的背景颜色
+        borderColor: 'rgb(75, 192, 192)', // 设置线的颜色
+        tension: 0.1,  // 拐点处曲率
+      }]
+    };
+    const config = {
+      type: 'line', // 设置图表类型
+      data: data,
+    };
+    const myChart = new Chart(ctx, config);
+
+
+</script>
+{% endblock %}

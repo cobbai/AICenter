@@ -10,6 +10,7 @@ from apps.article.views import article_bp
 from apps.user.views import user_bp
 from apps.auth.views import auth_bp
 from apps.nlp.views import nlp_bp
+from apps.cv.views import cv_bp
 
 """
 __init__.py 有两个作用：
@@ -63,8 +64,8 @@ def create_app():
     # 初始化缓存Cache
     redis_config = {
         'CACHE_TYPE': 'redis',  # 缓存类型用redis
-        'CACHE_REDIS_HOST': '172.31.8.80',  # redis 主机地址
-        'CACHE_REDIS_PORT': 6379,  # redis 端口号默认6379
+        'CACHE_REDIS_HOST': 'free.idcfengye.com',  # '192.168.31.54',  # redis 主机地址
+        'CACHE_REDIS_PORT': 10173,  # redis 端口号默认6379
         # 'CACHE_REDIS_PASSWORD': 'root',
     }
     cache.init_app(app, config=redis_config)  # flask缓存到redis数据库
@@ -75,6 +76,7 @@ def create_app():
     app.register_blueprint(user_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(nlp_bp)
+    app.register_blueprint(cv_bp)
 
     # 调试用
     from apps.temp.views import temp_bp

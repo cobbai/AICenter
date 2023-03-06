@@ -15,6 +15,7 @@ from apps.auth.model import Tag
 app = create_app()
 app.logger.info("app初始化完毕")
 
+
 # 404
 @app.errorhandler(404)
 def page_not_found(e):
@@ -56,10 +57,12 @@ def tpl_extra():
     # base.html 的导航栏需要全局标签变量
     article_tags = Tag.query.filter_by(source="文章标签").all()
     nlp_tags = Tag.query.filter_by(source="NLP模型标签").all()
+    cv_tags = Tag.query.filter_by(source="CV模型标签").all()
     data = dict(
         current_time=datetime.utcnow(),  # base.html 中的 moment(current_time)
         article_tags=article_tags,
         nlp_tags=nlp_tags,
+        cv_tags=cv_tags,
     )
     return data
 

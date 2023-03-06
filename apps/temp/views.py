@@ -41,10 +41,10 @@ def temp_index():
 @temp_bp.route("/redis")
 # @cache.cached(timeout=50)  # 页面缓存
 def temp_redis():
-    key = "testKey"
-    val = "哈哈哈哈" + str(1)
-    cache.set(key, val, timeout=180)
-    return cache.get(key)
+    key = "tt"
+    val = "3123123897453" + str(1)
+    cache.set(key, val, timeout=5000)
+    return cache.get('2')
 
 # 快速创建表单
 @temp_bp.route("/quickform/", methods=['GET', 'POST'])

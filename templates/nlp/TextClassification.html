@@ -16,19 +16,6 @@
 
             </div>
         </div>
-
-        {# 训练 #}
-        <label>训练器</label>
-        <form action="" method="post" enctype="multipart/form-data">
-            <input type="file">
-            <br>
-            <button id= "compute" class="btn btn-dark" style="width: 6rem" type="button">训练</button>
-        </form>
-
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-        </div>
-        <canvas id="myChart" width="50" height="50"></canvas>
     </div>
 
 {% endblock %}
@@ -53,7 +40,7 @@
         // ajax 请求数据
         var text = $(text).val()
         $.post("{{ url_for('nlp.TextClassification') }}", {'context':text}, function (data) {
-            // 回复计算按钮
+            // 恢复计算按钮
             compute_button.prop("disabled", false)
             compute_button.html("计算")
 
@@ -61,42 +48,8 @@
             {#console.log(data)#}
             var timecosthtml = "<p>计算时长：" + data["time_cost"] + "</p>"
             var ans = data["ans"]
-            $(result).html(timecosthtml + ans)
+            $('#result').html(timecosthtml + ans)
         }, "json")
     }
-
-    // 定时器日志进度条
-    var time;
-    function progressLog() {
-        clearTimeout(time);
-
-        // 重复执行定时器
-        time = setInterval(function () {
-            $.get('')
-        }, 1000)  // 1s执行一次
-
-    }
-
-    {# 训练结果图 #}
-    var ctx = $("#myChart");
-    const X = ['一月份', '二月份', '三月份','四月份', '五月份', '六月份', '七月份'];  // 设置 X 轴上对应的标签
-    const Y = [65, 59, 80, 81, 56, 55, 40]
-    const data = {
-      labels: X,
-      datasets: [{
-        label: 'loss',
-        data: Y,
-        fill: false,  // 折线以下的背景颜色
-        borderColor: 'rgb(75, 192, 192)', // 设置线的颜色
-        tension: 0.1,  // 拐点处曲率
-      }]
-    };
-    const config = {
-      type: 'line', // 设置图表类型
-      data: data,
-    };
-    const myChart = new Chart(ctx, config);
-
-
 </script>
 {% endblock %}

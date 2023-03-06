@@ -161,17 +161,32 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link menu-link" href="#">
+                <a class="nav-link menu-link" data-toggle="collapse" href="#cv" aria-expanded="false" aria-controls="cv">
                   <span data-feather="users"></span>
-                  OpenCV
+                  CV
+                  <span class="menu-arrow" data-feather="chevron-right"></span>
                 </a>
+                <div class="collapse" id="cv">
+                    <ul class="nav flex-column sub-menu">
+                        {% for tag in cv_tags %}
+                            <li class="nav-item">
+                                <a class="nav-link sub-menu-link" href="{{ url_for('cv.' + tag.tag_name_en) }}">
+                                    <span data-feather="chevron-down"></span>
+                                    {{ tag.tag_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
               </li>
+
               <li class="nav-item">
-                <a class="nav-link menu-link" href="{{ url_for('temp.chart') }}">
+                <a class="nav-link menu-link" href="{{ url_for('nlp.TextClassificationTrainer') }}">
                   <span data-feather="bar-chart-2"></span>
-                  Reports
+                  Trainer
                 </a>
               </li>
+
               <li class="nav-item">
                 <a class="nav-link menu-link" data-toggle="collapse" href="#Integrations" aria-expanded="false" aria-controls="Integrations">
                   <span data-feather="file"></span>

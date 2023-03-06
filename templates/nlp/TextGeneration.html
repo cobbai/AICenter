@@ -45,7 +45,7 @@
             {#console.log(data)#}
             var timecosthtml = "<p>计算时长：" + data["time_cost"] + "</p>"
             var ans = data["ans"]
-            $(result).html(timecosthtml + ans)
+            $('#result').html(timecosthtml + ans)
         }, "json")
     }
 

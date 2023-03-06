@@ -6,7 +6,9 @@ import pandas as pd
 from tensorflow import keras
 import jieba
 import keras_nlp
+import string
 from transformers import BertTokenizerFast
+from queue import Queue
 # os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 
@@ -27,53 +29,35 @@ class CustomerCallback(keras.callbacks.Callback):
                 w.write("\n")
 
 
+class CustomerCallbackRedis(keras.callbacks.Callback):
+    def __init__(self, q):
+        self.q = q
+
+    def on_epoch_end(self, epoch, logs=None):
+        if (int(epoch) % 1) == 0:
+            mes = "Epoch: {:>3} | Loss: ".format(epoch) + f"{logs['loss']:.4e}" + " | sparse_categorical_accuracy: " + f"{logs['sparse_categorical_accuracy']:.4e}" + " | Valid loss: " + f"{logs['val_loss']:.4e}" + " | val_sparse_categorical_accuracy: " + f"{logs['val_sparse_categorical_accuracy']:.4e}"
+            self.q.put(mes)
+
+
 class Classification:
     def __init__(self, modelpath=None, datapath=None):
+        self.MAX_SENT_LENGTH = 500
+        self.vocab_size = 20000
+        self.tokenizer = BertTokenizerFast.from_pretrained(modelpath + "bert-base-chinese")  # 以字符分割的 tokenizer
+        self.modelpath = modelpath
         if datapath is None:
-            # 以字符分割的 tokenizer
-            self.word_index = {}
-            with open(modelpath + "/new_word_counts.txt", "r",
-                      encoding="utf-8") as r:
-                for w in r.readlines():
-                    l = w.split("\t")
-                    try:
-                        self.word_index[l[0]] = int(l[1].strip("\n"))
-                    except:
-                        continue
-
-            # 三级类目id与模型预测id映射关系
-            self.idx_cate = {}
-            with open(modelpath + "/new_index_cate.txt", "r",
-                      encoding="utf-8") as r:
-                for line in r.readlines():
-                    l = line.split(",")
-                    self.idx_cate[int(l[0])] = int(l[1].strip("\n"))
-
-            # 预测1级类目模型
-            self.transformer_model = keras.models.load_model(modelpath)
-
-            self.cateId2name = {17799: "品牌设计", 17900: "空间设计服务", 17853: "影音视频服务",
-                                2107: "知识产权", 18097: "软件开发", 18075: "网站建设服务", 16134: "八戒国际",
-                                18083: "移动端开发", 9: "工程设计", 18139: "硬件开发", 17918: "UI设计",
-                                17941: "策划", 17988: "营销传播", 18200: "VR/AR/MR", 17884: "工业设计与制造",
-                                17825: "动漫游戏设计", 18034: "写作和内容", 18208: "区块链", 18123: "SaaS服务",
-                                5788: "法律服务", 18216: "人工智能", 5787: "工商财税", 18262: "企业咨询",
-                                18157: "技术服务", 18052: "翻译服务", 3128: "人力资源", 18338: "印刷服务",
-                                18235: "企业后勤服务", 4794: "科技研究开发", 18249: "企业培训", 4788: "科技咨询"}
+            self.cat_idx = pd.read_csv(modelpath + "temp/cat_idx", index_col=False)
+            self.model = keras.models.load_model(modelpath + "keras_nlp_classification")
         else:
-            self.tokenizer = BertTokenizerFast.from_pretrained("../models/bert-base-chinese")  # 以字符分割的 tokenizer
-            self.df = pd.read_csv(datapath, sep="\t", quoting=3).head()
-            self.MAX_SENT_LENGTH = 500
+            self.df = pd.read_csv(datapath)
 
     def compute(self, sentence):
-        X = [self.word_index[x] if x in self.word_index else 1 for x in jieba.cut(sentence)]
-        X = keras.preprocessing.sequence.pad_sequences([X], maxlen=150, padding="post", truncating="post")
-        Y = self.transformer_model.predict(X)
-
-        # 去除一级类目：遍历最大值的索引，看该索引下的类目是否在 data_d 中
-        Y = self.idx_cate[list(Y[0]).index(max(Y[0]))]
-
-        return self.cateId2name[Y]
+        X = self.tokenizer(str.lower(sentence))["input_ids"][1:-1]
+        X = keras.preprocessing.sequence.pad_sequences([X], maxlen=self.MAX_SENT_LENGTH, padding="post", truncating="post")
+        Y = self.model.predict(X)
+        Y_list = list(Y[0])
+        ans = Y_list.index(max(Y_list))
+        return self.cat_idx[self.cat_idx["index"] == ans].iloc[0, -1]
 
     def train_model(self, maxlen, vocab_size, num_class, embed_dim=128, num_heads=3, ff_dim=1024):
         inputs = keras.layers.Input(shape=(maxlen,))
@@ -99,26 +83,57 @@ class Classification:
         model.summary()
         return model
 
-    def train(self, text, label):
+    def jieba_tokenizer(self, text):
+        word_freq = {}
+        sentences = []
+        punc = string.punctuation + "，。？！；“”：、‘’、》《【】（）@#￥%……&*{}=-+——·．／"
+        for line in self.df[text]:
+            temp = []
+            for w in jieba.cut(line):
+                w = str.lower(w)
+                if w in punc or len(w) == 0 or str.isnumeric(w) or w == '' or w == ' ': continue
+                word_freq[w] = word_freq.get(w, 0) + 1
+                temp.append(w)
+            sentences.append(temp)
+
+        if os.path.exists("./new_word_counts.txt"): os.remove("./new_word_counts.txt")
+        idx = 2
+        word_id = {}
+        with open("./new_word_counts.txt", "w", encoding="utf-8") as w:
+            for word, freq in sorted(word_freq.items(), key=lambda x:-x[1]):
+                w.write(str(idx) + "\t" + word + "\t" + str(freq) + "\n")
+                word_id[word] = idx
+                idx += 1
+        vec = []
+        for line in sentences:
+            v = [word_id[x] if word_id[x] <= self.vocab_size else 1 for x in line]
+            vec .append(v)
+        self.df["vec"] = vec
+        return
+
+    def train(self, text, label, sample, epoch, q):
+        self.df = self.df.sample(frac=sample).reset_index(drop=True)
+        print("训练数据量：" + str(self.df.shape))
+        # Bert分词
         self.df["vec"] = self.df[text].apply(lambda x:self.tokenizer(str.lower(x))["input_ids"][1:-1])
 
-        word_freq_idx = {}
+        # jieba分词
+        # self.jieba_tokenizer(text)
+
+        # 处理label索引
+        cat_idx = self.df[label].drop_duplicates().reset_index(drop=True).reset_index()
+        self.df = self.df.merge(cat_idx, how="left", on=label)
 
         # 建模
-        self.df["title_vec"] = self.df[text].apply(
-            lambda x: [word_freq_idx[w] if w in word_freq_idx else 1 for w in x.split(" ")])
-        data = self.df.merge(self.df[label].drop_duplicates().reset_index(drop=True).reset_index(), how="left",
-                          on=label)
-        X = keras.preprocessing.sequence.pad_sequences(data["title_vec"].to_list(), maxlen=self.MAX_SENT_LENGTH,
+        X = keras.preprocessing.sequence.pad_sequences(self.df["vec"].to_list(), maxlen=self.MAX_SENT_LENGTH,
                                                        padding="post", truncating="post")
         # Y = keras.utils.to_categorical(data["index"].to_list(), num_classes=self.NUM_CLASSES - 1)
-        Y = np.array(data["index"])
+        Y = np.array(self.df["index"])
 
-        callbacks = [CustomerCallback("./log")]
+        callbacks = [CustomerCallbackRedis(q)]
 
-        MAX_NB_WORDS = pd.read_csv("./new_word_counts.txt", names=["word", "idx"], sep="\t").shape[0] + 2
         NUM_CLASSES = len(self.df[label].drop_duplicates())
-        model = self.train_model(self.MAX_SENT_LENGTH, MAX_NB_WORDS, NUM_CLASSES)
+        model = self.train_model(self.MAX_SENT_LENGTH, self.vocab_size, NUM_CLASSES)
 
         model.compile(
             optimizer='adamax',
@@ -126,19 +141,21 @@ class Classification:
             metrics=keras.metrics.SparseCategoricalAccuracy(),
         )
         model.fit(
-            X, Y, batch_size=128, epochs=50, validation_split=0.3, callbacks=callbacks
+            X, Y, batch_size=128, epochs=epoch, validation_split=0.3, callbacks=callbacks
         )
-
-        return
+        print("训练完成")
+        model.save(self.modelpath + "temp")
+        cat_idx.to_csv(self.modelpath + "temp/cat_idx", index=False, encoding="utf-8-sig")
+        return "训练完成"
 
 
 def temp_predict():
     t1 = time.time()
-    model = Classification("../models/total_category1_score_new_0.5")
+    model = Classification("../models/")
     t2 = time.time()
 
     print("加载时长：" + str(t2 - t1))
-    sentence = "需要一个拥有虚拟现实技术的装备"
+    sentence = "计算机相关专业本科以上学历，3年以上Java开发工作经验，具备较强的开发能力，注重代码质量，有良好的软件工程知识和编码规范意识"
     result = model.compute(sentence)
     t3 = time.time()
 
@@ -148,12 +165,15 @@ def temp_predict():
 
 def temp_train():
     t1 = time.time()
-    model = Classification(modelpath=None, datapath="../datasets/job_detail_file.txt")
+    model = Classification(modelpath="../models/", datapath="../datasets/job_detail_file.txt")
     t2 = time.time()
     print("加载时长：" + str(t2 - t1))
-    model.train("title", "category3id")
+    q = Queue()
+    model.train("title", "category3id", 0.001, 3, q)
     t3 = time.time()
-
+    print("训练结果日志队列：")
+    while not q.empty():
+        print(q.get())
     print("预测时长：" + str(t3 - t2))
 
 
