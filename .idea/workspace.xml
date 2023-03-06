@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/cv/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/cv/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/nlp/TextClassificationTrainer.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/nlp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nlp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/temp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/temp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engines/bert_classification/classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/engines/bert_classification/classification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/nlp/QA.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/QA.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/nlp/TextClassification.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/TextClassification.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/nlp/TextGeneration.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/nlp/TextGeneration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/cv/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/cv/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -414,7 +402,7 @@
       <workItem from="1677723593144" duration="31995000" />
       <workItem from="1677895640911" duration="5043000" />
       <workItem from="1678008930008" duration="6126000" />
-      <workItem from="1678065007633" duration="27086000" />
+      <workItem from="1678065007633" duration="27766000" />
     </task>
     <task id="LOCAL-00001" summary="version1">
       <created>1663140674609</created>
@@ -612,7 +600,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677482436187</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="version1">
+      <created>1678099426420</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1678099426420</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
