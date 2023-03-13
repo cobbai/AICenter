@@ -1,6 +1,8 @@
 import json
 import os
-from flask import Blueprint, render_template, request, jsonify, current_app
+from flask import Blueprint, render_template, request, jsonify, current_app, abort
+from flask_login import login_required, current_user
+from functools import wraps
 from werkzeug.utils import secure_filename
 from engines.bert_similarity.bertsimilarity import BertSimilarity
 from engines.bert_translation.translation import TextTranslation
@@ -14,6 +16,17 @@ import threading
 
 nlp_bp = Blueprint("nlp", __name__, url_prefix='/nlp')
 q = Queue()
+
+def need_permission(perm):
+    # 自定义装饰器：角色权限访问控制装饰器
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if not current_user.can(perm):
+                abort(403)
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 
 def train_func(app, content, file_path, q):
@@ -112,6 +125,8 @@ def TextClassification():
 
 
 @nlp_bp.route('/TextClassificationTrainer/', methods=['GET', 'POST'])
+@login_required
+@need_permission(Permission.MODEL)
 def TextClassificationTrainer():
     content = request.form.to_dict()
     file_path = os.getcwd() + "/engines/datasets/job_detail_file.txt"

@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8996c5e-592b-4c19-a432-37fefb9d3e4a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/engines/bert_classification/img_classification.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/cv/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/cv/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nlp/form.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/nlp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/nlp/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Template_flask/AICenter/templates/nlp",
+    "last_opened_file_path": "D:/Template_flask/AICenter",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -93,11 +96,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Template_flask\AICenter" />
       <recent name="D:\Template_flask\AICenter\templates\nlp" />
       <recent name="D:\Template_flask\AICenter\engines\bert_textgeneration" />
       <recent name="D:\Template_flask\AICenter\engines\bert_qa" />
       <recent name="D:\Template_flask\AICenter\engines\distillation" />
-      <recent name="D:\Template_flask\cobb_AIweb\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Template_flask\AICenter\engines\models" />
@@ -402,7 +405,12 @@
       <workItem from="1677723593144" duration="31995000" />
       <workItem from="1677895640911" duration="5043000" />
       <workItem from="1678008930008" duration="6126000" />
-      <workItem from="1678065007633" duration="27766000" />
+      <workItem from="1678065007633" duration="33332000" />
+      <workItem from="1678430076982" duration="4000" />
+      <workItem from="1678430092322" duration="3000" />
+      <workItem from="1678430103464" duration="7000" />
+      <workItem from="1678527252620" duration="4154000" />
+      <workItem from="1678670823802" duration="10787000" />
     </task>
     <task id="LOCAL-00001" summary="version1">
       <created>1663140674609</created>
@@ -607,7 +615,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678099426420</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="version1">
+      <created>1678099995675</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1678099995675</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

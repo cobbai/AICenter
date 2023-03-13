@@ -1,6 +1,6 @@
 from flask import Flask
 # pip3 install flask-wtf
-# pip install email_validator -i https://pypi.douban.com/simple/
+# pip3 install email_validator -i https://pypi.douban.com/simple/
 from flask_wtf import CSRFProtect
 import settings
 from extends import *
